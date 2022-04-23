@@ -1,3 +1,4 @@
+import ProductDetail from '../ProductDetail/ProductDetail'
 import './productListItem.css'
 
 export default function ProductListItem() {
@@ -14,9 +15,11 @@ export default function ProductListItem() {
                     <div className='thumb-item-action'>
                         <i className='fa fa-cart-plus center-box'></i>
                     </div>
-                    <div className='thumb-item-action'>
+                    <label className='thumb-item-action' htmlFor='product-detail-check'>
                         <i className='fa fa-search center-box'></i>
-                    </div>
+                    </label>
+                    <input type="checkbox" className="product-detail-check hidden-check" name="product-detail-checkbox" id="product-detail-check" autoComplete="off"/>
+                    <ProductDetail/>
                 </div>
             </div>
             <div className='sale-tag'>

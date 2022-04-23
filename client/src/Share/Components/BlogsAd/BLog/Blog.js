@@ -3,9 +3,11 @@ import './blog.css'
 export default function Blog() {
   return (
     <div className='blog'>
+      <a href='/blogdetail'>
         <div className='blog-image' style={{background: 'url(' + "assets/images/image-6.png" + ')'}}>
 
         </div>
+      </a> 
         <div className='blog-date'>April 4, 2022</div>
         <h4 className='blog-title'>
             Thời trang mùa đông nên chọn màu gì để mặc?

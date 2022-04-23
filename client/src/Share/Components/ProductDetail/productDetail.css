@@ -2,9 +2,17 @@
     position: fixed;
     z-index: 1000;
     top: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, 0.795);
     height: 100vh;
     width: 100vw;
+    display: none;
+    visibility: hidden;
+}
+
+.product-detail-check:checked+.product-detail-frame {
+    display: block;
+    visibility: visible;
 }
 
 .product-detail {
@@ -23,6 +31,7 @@
     font-size: 30px;
     color: white;
     text-shadow: 2px 1px 3px #393737;
+    cursor: pointer;
 }
 
 /* .btn-close i{

@@ -6,7 +6,7 @@ export default function ProductDetail() {
         <div className='container'>
             <div className='product-detail'>
                 <div className='close-wrap'>
-                    <label className='btn-close'>
+                    <label className='btn-close' htmlFor='product-detail-check'>
                         <i className='fa fa-close'></i>
                     </label>
                 </div>

@@ -40,6 +40,7 @@
     transform: scale(1.2);
     color: brown;
     transition: 0.4s;
+    cursor: pointer;
 }
 
 .thumb-item-action i {
@@ -51,7 +52,7 @@
 
 .thumb-item:hover .thumb-item-mask {
     visibility: visible;
-    cursor: pointer;;
+    /* cursor: pointer;; */
 }
 
 .sale-tag {
