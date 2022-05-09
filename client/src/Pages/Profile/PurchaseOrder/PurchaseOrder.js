@@ -23,7 +23,7 @@ export default function PurchaseOrder() {
             11/12/2021
         </td>
         <td>
-                11/12/2021
+            11/12/2021
         </td>
         
     </tr>

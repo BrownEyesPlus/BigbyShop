@@ -18,12 +18,16 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
   return (
     <div className="App">
-       <NavBar/>
-      <Router>
+       
+      <BrowserRouter>
+
+      <NavBar/>
+      
         <Switch>
           <Route exact path="/"> 
             <Home/>
@@ -33,7 +37,7 @@ function App() {
             <Shop/>
           </Route>
 
-          <Route exact path="/favourite"> 
+          <Route exact path="/favourite" component={Shop}> 
             <Shop/>
           </Route>
 
@@ -62,7 +66,7 @@ function App() {
           </Route>
 
         </Switch>
-      </Router>
+      </BrowserRouter>
 
       {/* <ProductDetail/> */}
       {/* <Cart/> */}

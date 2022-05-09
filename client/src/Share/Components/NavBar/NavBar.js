@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 import Cart from '../Cart/Cart'
 import './navbar.css'
 
@@ -29,6 +31,7 @@ export default function NavBar() {
                             <a className='' href='/favourite'>
                                 <i className='fa fa-heart'/>
                             </a>
+                            
                         </li>
                         
                         <li className='nav-item'>

@@ -1,5 +1,7 @@
 import './categories.css'
 import ProductListItem from '../../../Share/Components/ProductListItem/ProductListItem'
+import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 export default function Categories() {
   return (
@@ -48,6 +50,7 @@ export default function Categories() {
                 <div className='btn-see-more'>
                     See more...
                 </div>
+                <NavLink to="/shop">DDi nao</NavLink>
             </div>
         </div>
 

@@ -51,10 +51,10 @@ export default function Purchase() {
                             <span>Địa chỉ nhận hàng:</span>
                             
                                 <select className='purchase-address-select' name="cars" id="cars" >
-                                    <option value="volvo">Volvo</option>
-                                    <option value="saab">Saab</option>
-                                    <option value="mercedes">Mercedes</option>
-                                    <option value="audi">Audi</option>
+                                    <option value="volvo" disabled>Tỉnh/ Thành Phố</option>
+                                    <option value="saab">Hồ Chí Minh</option>
+                                    <option value="mercedes">Hà Giang</option>
+                                    <option value="audi">Cần Thơ</option>
                                 </select>
                                 <select className='purchase-address-select' name="cars" id="cars" >
                                     <option value="volvo">Volvo</option>

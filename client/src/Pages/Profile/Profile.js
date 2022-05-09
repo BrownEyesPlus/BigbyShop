@@ -75,6 +75,9 @@ export default function Profile() {
                 </thead>
                 <tbody>
                     <PurchaseOrder/>
+                    <PurchaseOrder/>
+                    <PurchaseOrder/>
+                    <PurchaseOrder/>
                 </tbody>
                 </table>
             </div>

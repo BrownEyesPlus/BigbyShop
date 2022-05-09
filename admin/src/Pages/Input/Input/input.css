@@ -1,0 +1,7 @@
+.admin-input button {
+    height: 30px;
+    width: 80px;
+    background-color: transparent;
+    border: solid 1px green;
+    border-radius: 3px;
+}
