@@ -1,82 +1,17 @@
 import './categories.css'
-import ProductListItem from '../../../Share/Components/ProductListItem/ProductListItem'
-import { Link } from 'react-router-dom'
-import { NavLink } from 'react-router-dom'
 
-export default function Categories() {
-  return (
+import Category from '../../../Share/Components/Category'
 
-    <div className='categories'>
-        <div className='part category'>
-            <div className='container'>
-                <h2 className='category-title'>
-                    Danh muc
-                </h2>
-                <div className='row product-lists'>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                </div>
-                <div className='btn-see-more'>
-                    See more...
-                </div>
-            </div>
+export default function Categories({ categories }) {
+    return (
+        <div className='categories'>
+            {categories.map((category, index) => (
+                <Category
+                    key={index}
+                    title={category.title}
+                    dataList={category.list}
+                />
+            ))}
         </div>
-
-        <div className='part category' style={{background: 'linear-gradient(0deg, #F4F1E9, #F4F1E9), #FFFFFF'}}>
-            <div className='container'>
-                <h2 className='category-title'>
-                    Danh muc
-                </h2>
-                <div className='row product-lists'>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                </div>
-                <div className='btn-see-more'>
-                    See more...
-                </div>
-                <NavLink to="/shop">DDi nao</NavLink>
-            </div>
-        </div>
-
-        {/* <div className='part category'>
-            <div className='container'>
-                <h2 className='category-title'>
-                    Danh muc
-                </h2>
-                <div className='row product-lists'>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                    <ProductListItem/>
-                </div>
-                <div className='btn-see-more'>
-                    See more...
-                </div>
-            </div>
-        </div> */}
-
-    </div>
-  )
+    )
 }
