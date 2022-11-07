@@ -2,7 +2,8 @@ import ProductDetail from '../ProductDetail/ProductDetail'
 import './productListItem.css'
 
 export default function ProductListItem({ data }) {
-  const { thumbnail } = data
+  const { thumbnail, name, sale, listedPrice, likes } = data
+  const price = (1 - Number(sale)) * Number(listedPrice)
 
   return (
     <div className='col-2-4 product-lists-item'>
@@ -27,26 +28,26 @@ export default function ProductListItem({ data }) {
         <div className='sale-tag'>
           <div className='sale-tag-square'>
             <span> Sale </span>
-            <span> 20% </span>
+            <span> {sale}% </span>
           </div>
           <div className='sale-tag-polygon'>
           </div>
         </div>
       </div>
       <div className='thumb-item-name'>
-        Áo phông xịn xò
+        {name}
       </div>
       <div className='thumb-item-price-like row'>
         <span className='thumb-item-price col-8'>
-          190.000 đ
+          {price} đ
         </span>
         <span className='thumb-item-like col-4'>
           <i className='fa fa-heart center-box'></i>
-          245
+          {likes}
         </span>
       </div>
       <div className='thumb-item-origin-price'>
-        299.000 đ
+        {listedPrice} đ
       </div>
     </div>
   )
