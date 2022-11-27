@@ -1,53 +1,71 @@
+import { useDispatch } from 'react-redux'
+import { actions } from '../../../reducers/app'
 import ProductDetail from '../ProductDetail/ProductDetail'
 import './productListItem.css'
 
 export default function ProductListItem({ data }) {
-  const { thumbnail } = data
+  const dispatch = useDispatch()
+
+  const { thumbnail, sale, slug, name, listedPrice, } = data
+  const displaySale = sale * 100
+  const price = (1 - sale) * listedPrice
+
+  const handleOpenModal = () => {
+    if (data)
+      dispatch(actions.setPreviewProduct(data))
+  }
 
   return (
-    <div className='col-2-4 product-lists-item'>
-      <div className='thumb-item'
+    <div className="col-2-4 product-lists-item">
+      <div className="thumb-item"
         style={{ background: 'url(' + thumbnail + ')' }}
       >
-        <div className='thumb-item-mask center-box'>
-          <div className='thumb-item-actions'>
-            <div className='thumb-item-action'>
-              <i className='fa fa-heart center-box'></i>
+        <div className="thumb-item-mask center-box">
+          <div className="thumb-item-actions">
+            <div className="thumb-item-action">
+              <i className="fa fa-heart center-box"></i>
             </div>
-            <div className='thumb-item-action'>
-              <i className='fa fa-cart-plus center-box'></i>
+            <div className="thumb-item-action">
+              <i className="fa fa-cart-plus center-box"></i>
             </div>
-            <label className='thumb-item-action' htmlFor='product-detail-check'>
-              <i className='fa fa-search center-box'></i>
+            <label className="thumb-item-action" htmlFor="product-detail-check" onClick={handleOpenModal}>
+              <i className="fa fa-search center-box"></i>
             </label>
             <input type="checkbox" className="product-detail-check hidden-check" name="product-detail-checkbox" id="product-detail-check" autoComplete="off" />
-            <ProductDetail data={data} />
+            {/* <ProductDetail data={data} /> */}
           </div>
         </div>
-        <div className='sale-tag'>
-          <div className='sale-tag-square'>
-            <span> Sale </span>
-            <span> 20% </span>
-          </div>
-          <div className='sale-tag-polygon'>
-          </div>
+        <div className="sale-tag">
+          {sale > 0 && (
+            <>
+              <div className="sale-tag-square">
+                <span> Sale </span>
+                <span>
+                  {`${displaySale}%`} </span>
+              </div>
+              <div className="sale-tag-polygon">
+              </div>
+            </>
+          )}
         </div>
       </div>
-      <div className='thumb-item-name'>
-        Áo phông xịn xò
+      <div className="thumb-item-name">
+        {name}
       </div>
-      <div className='thumb-item-price-like row'>
-        <span className='thumb-item-price col-8'>
-          190.000 đ
+      <div className="thumb-item-price-like row">
+        <span className="thumb-item-price col-8">
+          {`${price} đ`}
         </span>
-        <span className='thumb-item-like col-4'>
-          <i className='fa fa-heart center-box'></i>
-          245
+        <span className="thumb-item-like col-4">
+          <i className="fa fa-heart center-box"></i>
+          {/* 245 */}
         </span>
       </div>
-      <div className='thumb-item-origin-price'>
-        299.000 đ
-      </div>
+      {sale > 0 && (
+        <div className="thumb-item-origin-price">
+          {`${listedPrice} đ`}
+        </div>
+      )}
     </div>
   )
 }

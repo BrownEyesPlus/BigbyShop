@@ -12,7 +12,7 @@
 
 .left-slide {
     width: 40%;
-    background-position: center !important; 
+    background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
 }
@@ -25,7 +25,7 @@
     position: absolute;
 }
 
-.slide-polygon img{
+.slide-polygon img {
     height: calc(100vh - 61px);
     position: absolute;
 }
@@ -60,4 +60,25 @@
 .slide-description {
     text-transform: uppercase;
     font-size: 20px;
+}
+
+.slide-btn-frame {
+    display: flex;
+    justify-content: center;
+}
+
+.slide-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6px 24px 8px 24px;
+    color: white;
+    font-size: 17px;
+    text-decoration: none;
+    transition: 0.4s;
+    margin-top: 12px;
+}
+
+.slide-btn:hover {
+    box-shadow: 0px 0px 3px 1px gray;
 }
