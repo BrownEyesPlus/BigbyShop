@@ -1,20 +1,34 @@
 import './blog.css'
 
-export default function Blog() {
-  return (
-    <div className='blog'>
-      <a href='/blogdetail'>
-        <div className='blog-image' style={{background: 'url(' + "assets/images/image-6.png" + ')'}}>
+export default function Blog({ data }) {
+  const {
+    slug,
+    thumbnail,
+    title,
+    description,
+    created_at,
+  } = data
 
-        </div>
-      </a> 
-        <div className='blog-date'>April 4, 2022</div>
-        <h4 className='blog-title'>
-            Thời trang mùa đông nên chọn màu gì để mặc?
-        </h4>
-        <p className='blog-description'>
-            Mùa đông lạnh bạn vẫn có thể diện những chiếc váy 2 dây, váy hoa điệu đà được mà không lo giá...
-        </p>
+  return (
+    <div className="blog">
+      {data && (
+        <>
+          <a href={`/blogdetail`}>
+            <div className="blog-image" style={{ background: 'url(' + thumbnail + ')' }}>
+
+            </div>
+          </a>
+          <div className="blog-date">
+            {created_at}
+          </div>
+          <h4 className="blog-title">
+            {title}
+          </h4>
+          <p className="blog-description">
+            {description}
+          </p>
+        </>
+      )}
     </div>
   )
 }

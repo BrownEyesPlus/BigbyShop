@@ -1,31 +1,42 @@
+import { ORDER } from '../../../Constants'
 import './purchaseOrder.css'
 
-export default function PurchaseOrder() {
+export default function PurchaseOrder({ data }) {
+  const {
+    id,
+    uuid,
+    status,
+    total_price,
+    created_at,
+    updated_at
+  } = data
+
   return (
     <tr className="alert" role="alert">
-        <td>
-            <></>
-        </td>
-        <td>
-            <div className="email">
-            <span>123456789 </span>
-            </div>
-        </td>
-        <td>
-            <div className='order-status'>
-                Đã nhận
-            </div>
-        </td>
-        <td className="order-price">
-            1.200.000
-        </td>
-        <td>
-            11/12/2021
-        </td>
-        <td>
-            11/12/2021
-        </td>
-        
+      <td>
+        <></>
+      </td>
+      <td>
+        <div className="email">
+          <span>
+            {uuid}
+          </span>
+        </div>
+      </td>
+      <td>
+        <div className={`order-status ${ORDER.status[status].style}`}>
+          {ORDER.status[status].name}
+        </div>
+      </td>
+      <td className="order-price">
+        {total_price}
+      </td>
+      <td>
+        {created_at}
+      </td>
+      <td>
+        {updated_at}
+      </td>
     </tr>
   )
 }

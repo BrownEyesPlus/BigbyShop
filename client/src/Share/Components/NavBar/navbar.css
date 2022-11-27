@@ -1,54 +1,59 @@
 .navbar {
-    position: absolute;
-    border-bottom: solid 1px #bc6e70;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    background-color: white;
+  position: absolute;
+  border-bottom: solid 1px #bc6e70;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: white;
 }
 
 .logo {
-    background-image: url('./../../../../public/assets/images/bigby-logo.png');
-    background-position: inherit;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 100%;
-    height: 60px;
-    background-position-x: -14px;
+  background-image: url('./../../../../public/assets/images/bigby-logo.png');
+  background-position: inherit;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100%;
+  height: 60px;
+  background-position-x: -14px;
 }
 
 .left-navbar {
-    width: 50%;
+  width: 50%;
 }
 
 .right-navbar {
-    width: 50%;
-    display: flex;
-    justify-content: right;
+  width: 50%;
+  display: flex;
+  justify-content: right;
 }
 
 .nav-items {
-    display: flex;
-    /* margin: 0; */
-    /* padding: 0; */
-    margin-right: calc(0% - 10px)
+  display: flex;
+  /* margin: 0; */
+  /* padding: 0; */
+  margin-right: calc(0% - 10px)
 }
 
-.nav-items li{
-    list-style-type: none;
-    display: flex;
-    align-items: center;
+.nav-items li {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
 }
 
 .nav-item {
-    padding: 0;
+  padding: 0;
 }
 
-.nav-item a{
-    padding: 0px 10px;
-    text-decoration: none;
-    text-transform: uppercase;   
-    color: black;
-    font-weight: 600;
-    font-size: 18px;
+.nav-item.active a {
+  color: #b73737;
+  font-weight: 600;
+}
+
+.nav-item a {
+  padding: 0px 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: black;
+  font-weight: 500;
+  font-size: 18px;
 }

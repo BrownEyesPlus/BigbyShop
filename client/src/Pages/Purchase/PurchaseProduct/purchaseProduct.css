@@ -3,14 +3,15 @@
     box-shadow: 0px 1px 2px 0px #aaa9a9;
 }
 
-.purchase-products .table tbody th, .purchase-products .table tbody td {
+.purchase-products .table tbody th,
+.purchase-products .table tbody td {
     border: none;
     padding: 12px;
     font-size: 14px;
     background: #fff;
     border-bottom: 4px solid #f8f9fd;
     vertical-align: middle;
-    
+
 }
 
 .purchase-products .table tbody td .img {
@@ -51,4 +52,8 @@
     -moz-appearance: none;
     appearance: none;
     cursor: pointer;
+}
+
+.color-size {
+    margin-top: 6px;
 }

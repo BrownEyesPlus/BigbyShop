@@ -5,7 +5,7 @@ import BlogsAd from '../../Share/Components/BlogsAd/BlogsAd'
 import NewsLetter from '../../Share/Components/NewsLetter/NewsLetter'
 import Categories from './Categories/Categories'
 import Slides from './Sildes/Slides'
-import Tags from './Tags/Tags'
+import BigTags from './BigTags/BigTags'
 
 const fakeHomeData = {
   categories: [
@@ -17,7 +17,7 @@ const fakeHomeData = {
           slug: '1',
           thumbnail: '/assets/images/products/batman-im-not-saying-funny-quote.webp',
           name: 'Áo phông xịn xò',
-          sale: 0.2,
+          sale: 0,
           listedPrice: 124000,
           likes: 143
         },
@@ -199,6 +199,52 @@ const fakeHomeData = {
         },
       ]
     },
+  ],
+  blogs: [
+    {
+      id: 1,
+      slug: 'dauxanh',
+      thumbnail: 'assets/images/image-3.png',
+      title: 'Dau xanh rau ma',
+      description: 'Dau xanh rau ma co the giup ban giam can mot cach dang ke, ngon hon khi uong lanh, no hon khi an 2 bat.',
+      created_at: 'April 4, 12',
+    },
+    {
+      id: 1,
+      slug: 'dauxanh',
+      thumbnail: 'assets/images/image-2.png',
+      title: 'Thời trang mùa đông nên chọn màu gì để mặc?',
+      description: 'Mùa đông lạnh bạn vẫn có thể diện những chiếc váy 2 dây, váy hoa điệu đà được mà không lo giá...',
+      created_at: 'April 4, 12',
+    },
+    {
+      id: 1,
+      slug: 'dauxanh',
+      thumbnail: 'assets/images/image-6.png',
+      title: 'Dau xanh rau ma',
+      description: 'Dau xanh rau ma co the giup ban giam can mot cach dang ke, ngon hon khi uong lanh, no hon khi an 2 bat.',
+      created_at: 'April 4, 12',
+    },
+  ],
+  bigTags: [
+    {
+      id: 1,
+      name: 'Nam',
+      slug: 'shop',
+      image: 'assets/images/image-3.png',
+    },
+    {
+      id: 1,
+      name: 'Nữ',
+      slug: 'shop',
+      image: 'assets/images/image-2.png',
+    },
+    {
+      id: 1,
+      name: 'Khác',
+      slug: 'shop',
+      image: 'assets/images/image-4.png',
+    },
   ]
 }
 
@@ -207,9 +253,9 @@ export default function Home() {
     <>
       {/* <NavBar/> */}
       <Slides />
-      <Tags />
+      <BigTags dataList={fakeHomeData.bigTags} />
       <Categories categories={fakeHomeData.categories} />
-      <BlogsAd />
+      <BlogsAd blogs={fakeHomeData.blogs} />
       <NewsLetter />
     </>
   )
