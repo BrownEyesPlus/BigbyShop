@@ -6,9 +6,11 @@ import './productListItem.css'
 export default function ProductListItem({ data }) {
   const dispatch = useDispatch()
 
-  const { thumbnail, sale, slug, name, listedPrice, } = data
-  const displaySale = sale * 100
-  const price = (1 - sale) * listedPrice
+  const { image, id, name } = data
+  const listedPrice = data.price
+  const sale = data.discount.discount
+  const displaySale = sale > 100 ? 10 : sale
+  const price = (100 - displaySale)/100 * listedPrice
 
   const handleOpenModal = () => {
     if (data)
@@ -18,7 +20,7 @@ export default function ProductListItem({ data }) {
   return (
     <div className="col-2-4 product-lists-item">
       <div className="thumb-item"
-        style={{ background: 'url(' + thumbnail + ')' }}
+        style={{ background: 'url(' + image + ')' }}
       >
         <div className="thumb-item-mask center-box">
           <div className="thumb-item-actions">

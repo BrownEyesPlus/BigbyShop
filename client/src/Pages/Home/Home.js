@@ -6,6 +6,9 @@ import NewsLetter from '../../Share/Components/NewsLetter/NewsLetter'
 import Categories from './Categories/Categories'
 import Slides from './Sildes/Slides'
 import BigTags from './BigTags/BigTags'
+import { getBaseProduct } from '../../lib'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const fakeHomeData = {
   categories: [
@@ -249,6 +252,17 @@ const fakeHomeData = {
 }
 
 export default function Home() {
+  const [blogs, setBlogs] = useState({})
+
+
+
+  useEffect(() => {
+    // sendRegisterInfor()
+  }, [])
+
+
+  // console.log(baseProducts)
+
   return (
     <>
       {/* <NavBar/> */}

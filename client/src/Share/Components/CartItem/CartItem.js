@@ -4,19 +4,21 @@ export default function CartItem({ data }) {
   const {
     slug,
     name,
-    image,
+    // image,
     price,
-    color,
+    colorProduct,
     size,
     quantity,
   } = data
+
+  const color = colorProduct.color
 
   return (
     <div className="cart-item">
       <div className="cart-item-wrap row">
         <div className="col-3">
           <div className="cart-item-image">
-            <img src={image} alt={name} />
+            <img src={colorProduct.image} alt={name} />
           </div>
         </div>
         <div className="col-9 flex-column">
@@ -31,8 +33,8 @@ export default function CartItem({ data }) {
               <div
                 className="item-color"
                 style={{
-                  backgroundColor: color.code,
-                  borderColor: (color.code === 'white' || color.code === '#fffff' ? 'gray' : 'white'),
+                  backgroundColor: color.color_code,
+                  borderColor: (color.color_code === 'white' || color.color_code === '#fffff' ? 'gray' : 'white'),
                   boxSizing: 'border-box',
                 }}
               />
@@ -49,7 +51,7 @@ export default function CartItem({ data }) {
                 <button type="submit">
                   <i className="fa fa-minus"></i>
                 </button>
-                1
+                {quantity}
                 <button type="submit">
                   <i className="fa fa-plus"></i>
                 </button>

@@ -1,4 +1,6 @@
+import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import { getBaseProduct } from '../../lib'
 import BlogsAd from '../../Share/Components/BlogsAd/BlogsAd'
 import NewsLetter from '../../Share/Components/NewsLetter/NewsLetter'
 import ProductListItem from '../../Share/Components/ProductListItem/ProductListItem'
@@ -226,12 +228,28 @@ const fakeHomeData = {
 }
 
 export default function Shop() {
-	const { id } = useParams()
+	// const { id } = useParams()
+
+	const [baseProducts, setBaseProduct] = useState({})
+
+  const sendRegisterInfor = async () => {
+    const response = await getBaseProduct();
+    if (response?.code) {
+      return response.detail
+    }
+    setBaseProduct(response)
+    return response
+  }
+
+  useEffect(() => {
+    sendRegisterInfor()
+  }, [])
 
 	return (
 		<div className="shop">
 			<div className="products-bar container">
 				<div className="products-top-bar row">
+					<h1 className="hidden"></h1>
 					<div className="products-by-gender col-4">
 						<input type="radio" className="gender-check hidden-check" name="options" id="option1" autoComplete="off" defaultChecked />
 						<label className="gender-option" htmlFor="option1" >
@@ -422,7 +440,7 @@ export default function Shop() {
 			</div>
 			<div className="products container">
 				<div className="row product-lists">
-					{fakeHomeData.categories[0].list.map((product, index) => (
+					{baseProducts?.results?.map((product, index) => (
 						<ProductListItem data={product} key={index} />
 					))}
 				</div>

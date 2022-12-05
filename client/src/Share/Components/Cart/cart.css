@@ -45,7 +45,8 @@
     margin: 12px 36px 12px 24px;
     display: flex;
     flex-direction: column;
-    /* height: calc(100vh - 26px); */
+    height: calc(100vh - 26px);
+    width: calc(100% - 36px - 24px);
 }
 
 .cart-top {

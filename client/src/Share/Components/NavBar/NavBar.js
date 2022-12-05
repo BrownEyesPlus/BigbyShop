@@ -3,9 +3,16 @@ import { NavLink } from 'react-router-dom'
 
 import Cart from '../Cart/Cart'
 import { LINK } from '../../../Constants'
+import { useSelector } from 'react-redux'
 
 export default function NavBar() {
   const pathname = (window.location.pathname)
+
+  const cart = useSelector(state => state.app.cart)
+  const cartCount = cart.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.quantity,
+    0
+  );
 
   return (
     <div className="navbar center-box">
@@ -43,6 +50,11 @@ export default function NavBar() {
               <li className="nav-item">
                 <label className="cart-open" htmlFor="cart-check" style={{ fontSize: "24px", cursor: "pointer", marginBottom: "3px", marginLeft: "6px", marginRight: "6px" }}>
                   <i className="fa fa-shopping-cart" />
+                  {cartCount > 0 && (
+                    <div className="cart-count">
+                      <span>{cartCount}</span>
+                    </div>
+                  )}
                 </label>
                 <input type="checkbox" className="cart-check hidden-check" name="cart-checkbox" id="cart-check" autoComplete="off" />
                 <Cart />
