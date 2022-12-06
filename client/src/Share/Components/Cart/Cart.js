@@ -1,64 +1,21 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import CartItem from '../CartItem/CartItem'
 import './cart.css'
 
-const fakePurchaseData = {
-  list: [
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/image-10.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Red',
-        code: 'red'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/product-1.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'White',
-        code: 'white'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/image-10.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Green',
-        code: 'green'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/product-1.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Gray',
-        code: 'gray'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-  ]
-}
-
 export default function Cart() {
+  const dispatch = useDispatch()
+
+  const cart = useSelector(state => state.app.cart)
+  const tempTotalPrice = cart.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.quantity * currentValue.price,
+    0
+  );
+
+  useEffect(() => {
+    console.log(cart)
+  }, [cart])
 
   return (
     <label className="cart-frame">
@@ -75,7 +32,7 @@ export default function Cart() {
             </label>
           </div>
           <div className="cart-items">
-            {fakePurchaseData.list.map((item, index) => (
+            {cart.map((item, index) => (
               <CartItem key={index} data={item} />
             ))}
           </div>
@@ -83,7 +40,7 @@ export default function Cart() {
           <div className="cart-bottom bottom">
             <div className="cart-total-price">
               Tổng tính:
-              <span>600.000 đ</span>
+              <span> {tempTotalPrice} đ</span>
             </div>
             <a href="./purchase" >
               <div className="btn-cart">

@@ -5,9 +5,9 @@ export default function NewsLetter() {
     <div className='news-letter'>
       <div className='center-box'>
         <div className='news-letter-wrap'>
-          <h1 className='letter-title'>
+          <h2 className='letter-title'>
             Nhận tin mới
-          </h1>
+          </h2>
           <div className='letter-des'>
             Nhận thông báo mới nhất về các trang phục yêu thích của bạn.
           </div>

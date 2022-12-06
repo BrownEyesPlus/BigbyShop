@@ -52,7 +52,7 @@
 
 .product-image {
     height: 100%;
-    background-size: contain!important;
+    background-size: contain !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
 }
@@ -98,27 +98,45 @@ span.product-origin-price {
     font-size: 17px;
 }
 
-.product-colors {
-
-}
+.product-colors {}
 
 .product-color {
-    height: 40px;
-    width: 40px;
-    border: solid 6px darkgray;
+    height: 38px;
+    width: 38px;
+    border: solid 3px darkgray;
     border-radius: 50%;
     margin-right: 6px;
     margin-bottom: 6px;
     margin-top: 6px;
+    position: relative;
+    cursor: pointer;
+}
+
+.product-color::before {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 10px;
+    width: 20px;
+    content: "";
+    z-index: 10;
+    border-bottom: solid 3px;
+    border-left: solid 3px;
+    border-color: white;
+    box-sizing: border-box;
+    transform: rotate(-45deg) translate(49%, -3%);
+    display: none;
+}
+
+.product-color.active::before {
+    display: block;
 }
 
 .product-size-name {
     font-size: 17px;
 }
 
-.product-sizes {
-    
-}
+.product-sizes {}
 
 .product-size {
     height: 40px;
@@ -131,6 +149,12 @@ span.product-origin-price {
     padding-top: 6px;
     justify-content: center;
     align-content: center;
+    cursor: pointer;
+}
+
+.product-size.active {
+    border: solid 3px green;
+    color: green;
 }
 
 .product-stock {
@@ -141,13 +165,13 @@ span.product-origin-price {
     margin-top: auto;
 }
 
-.product-detail-actions .row{
+.product-detail-actions .row {
     justify-content: space-between;
 }
 
 .product-detail-action {
     width: calc(50% - 3px);
-    
+
     border-radius: 7px;
     text-align: center;
     padding: 9px 0px;
@@ -160,7 +184,7 @@ span.product-origin-price {
 }
 
 .btn-like:hover {
-    background:rgb(201 107 107);
+    background: rgb(201 107 107);
     color: white;
     transition: 0.4s;
 }
@@ -179,6 +203,7 @@ span.product-origin-price {
 
 .product-content-line {
     width: 100%;
+    margin: 16px 0;
 }
 
 
@@ -189,12 +214,14 @@ span.product-origin-price {
     align-items: center;
     font-size: 2em;
 }
+
 .back-stars {
     display: flex;
     color: #bb5252;
     position: relative;
     text-shadow: 4px 4px 10px #843a3a;
 }
+
 .front-stars {
     display: flex;
     color: #FFBC0B;

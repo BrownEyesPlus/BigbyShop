@@ -1,9 +1,17 @@
+import { useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { PRODUCT_CONSTANT } from '../../Constants'
+
 import ClickOutSide from '../../hooks/ClickOutSide'
+import { getProductColorsByBaseProductId } from '../../lib'
 import { actions } from '../../reducers/app'
 
 export default function PreviewProductModal() {
   const dispatch = useDispatch()
+  const [productColors, setProductColors] = useState([])
+  const [colorSelected, setColorSelected] = useState(null)
+  const [productSelected, setProductSelected] = useState(null)
 
   const previewProduct = useSelector(state => state.app.previewProduct)
 
@@ -11,6 +19,44 @@ export default function PreviewProductModal() {
     dispatch(actions.clearPreviewProduct())
   }
 
+  useEffect(() => {
+    if (previewProduct.id) {
+      const sendRequest = async () => {
+        const response = await getProductColorsByBaseProductId(previewProduct.id)
+        if (response) {
+          setProductColors(response)
+          setColorSelected(response[0])
+          return response
+        }
+        return null
+      }
+      sendRequest()
+    }
+  }, [previewProduct])
+
+  useEffect(() => {
+    setProductSelected(null)
+  }, [colorSelected])
+
+  const handleSetColor = (color) => {
+    if (color !== colorSelected)
+      setColorSelected(color)
+  }
+
+  const handleAddToCart = () => {
+    if (productSelected) {
+      const productParams = {
+        id: productSelected.id,
+        name: previewProduct.name,
+        colorProduct: colorSelected,
+        size: PRODUCT_CONSTANT.size[productSelected.size],
+        price: previewProduct.price,
+        quantity: 1
+      }
+      dispatch(actions.addToCart(productParams))
+      handleCloseModal()
+    }
+  }
   return (
     <>
       <div className={`product-detail-modal ${(Object.keys(previewProduct).length > 0) ? 'show' : ''}`}>
@@ -24,55 +70,64 @@ export default function PreviewProductModal() {
               </div>
               <div className="product-detail-wrap">
                 <div className="product-image-frame col-6">
-                  <div className="product-image" style={{ background: 'url(' + previewProduct.thumbnail + ')' }}>
+                  <div className="product-image" style={{ background: 'url(' + (colorSelected?.image || previewProduct.image) + ')' }}>
 
                   </div>
                 </div>
                 <div className="product-content col-4">
                   <h2 className="product-title mt-12px">
-                    Áo đẹp ơi là đẹp
+                    {previewProduct?.name}
                   </h2>
                   <span className="product-code">
-                    Mã sản phẩm: 122345678
+                    Mã sản phẩm: {previewProduct.code_name}
                   </span>
-                  <div className="star-rating mt-12px" title="70%">
-                    <div className="back-stars">
-                      <i className="fa fa-star" aria-hidden="true" />
-                      <i className="fa fa-star" aria-hidden="true" />
-                      <i className="fa fa-star" aria-hidden="true" />
-                      <i className="fa fa-star" aria-hidden="true" />
-                      <i className="fa fa-star" aria-hidden="true" />
-                      <div className="front-stars" style={{ width: "70%" }}>
+                  {previewProduct.rating ? (
+                    <div className="star-rating mt-12px" title="70%">
+                      <div className="back-stars">
                         <i className="fa fa-star" aria-hidden="true" />
                         <i className="fa fa-star" aria-hidden="true" />
                         <i className="fa fa-star" aria-hidden="true" />
                         <i className="fa fa-star" aria-hidden="true" />
                         <i className="fa fa-star" aria-hidden="true" />
+                        <div className="front-stars" style={{ width: "70%" }}>
+                          <i className="fa fa-star" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                          <i className="fa fa-star" aria-hidden="true" />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="no-rating" style={{ marginTop: '12px', fontStyle: 'italic' }}>
+                      (This product have no rating yet.)
+                    </div>
+                  )}
+
                   <div className="product-price mt-12px">
                     <span className="product-update-price">
-                      300.000 đ
+                      {previewProduct.price} đ
                     </span>
-                    <span className="product-origin-price">
-                      400.000 đ
-                    </span>
+                    {previewProduct.discount > 0 && (
+                      <span className="product-origin-price">
+                        {previewProduct.price * (previewProduct.discount / 100)} đ
+                      </span>
+                    )}
                   </div>
                   <hr className="product-content-line" />
                   <div className="product-color-name">
-                    Màu sắc: <span> Đen</span>
+                    Màu sắc: <span> {colorSelected?.color.name} </span>
                   </div>
                   <div className="product-colors">
                     <div className="row">
-                      <div className="product-color" style={{ backgroundColor: 'red' }}>
-                      </div>
-                      <div className="product-color" style={{ backgroundColor: 'yellow' }}>
-                      </div>
-                      <div className="product-color" style={{ backgroundColor: 'gray' }}>
-                      </div>
-                      <div className="product-color" style={{ backgroundColor: 'green' }}>
-                      </div>
+                      {productColors.map((color, index) => (
+                        <div
+                          key={index}
+                          className={`product-color ${color.id === colorSelected?.id ? 'active' : ''}`}
+                          style={{ backgroundColor: color?.color?.color_code }}
+                          onClick={() => handleSetColor(color)}
+                        />
+                      ))}
                     </div>
                   </div>
                   <div className="product-size-name">
@@ -80,22 +135,28 @@ export default function PreviewProductModal() {
                   </div>
                   <div className="product-sizes">
                     <div className="row">
-                      <div className="product-size">
-                        S
-                      </div>
-                      <div className="product-size">
-                        M
-                      </div>
-                      <div className="product-size" >
-                        L
-                      </div>
-                      <div className="product-size">
-                        XL
-                      </div>
+                      {colorSelected?.product.map((product, index) => (
+                        <div
+                          key={index}
+                          className={`product-size ${product.id === productSelected?.id ? 'active' : ''}`}
+                          onClick={() => setProductSelected(product)}
+                        >
+                          {PRODUCT_CONSTANT.size[product.size]}
+                        </div>
+                      ))}
                     </div>
                   </div>
                   <div className="product-stock mt-12px">
-                    Hiện có: <span>290</span>
+                    {productSelected ? (
+                      <>
+                        Hiện có: <span>{productSelected?.quantity}</span>
+                      </>
+                    ) : (
+                      <span style={{ color: 'orange' }}>
+                        Quý khách vui lòng chọn 'Size'
+                      </span>
+                    )}
+
                   </div>
                   <hr className="product-content-line" />
                   <div className="product-description">
@@ -109,7 +170,10 @@ export default function PreviewProductModal() {
                       <div className="product-detail-action btn-like">
                         Yêu thích
                       </div>
-                      <div className="product-detail-action btn-add-to-cart">
+                      <div
+                        className="product-detail-action btn-add-to-cart"
+                        onClick={handleAddToCart}
+                      >
                         Thêm vào giỏ
                       </div>
                     </div>
@@ -119,7 +183,7 @@ export default function PreviewProductModal() {
             </div>
           </ClickOutSide>
         </div>
-      </div>
+      </div >
       <style jsx="true">
         {`
           .product-detail-modal.show{
