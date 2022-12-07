@@ -2,20 +2,22 @@ import './purchaseProduct.css'
 
 export default function PurchaseProduct({ data }) {
   const {
-    slug,
+    id,
     name,
     image,
     price,
-    color,
+    colorProduct,
     size,
     quantity,
   } = data
+
+  // console.log(data)
 
   return (
     <tr className="alert" role="alert">
       <td>
         <div className="img" style={{ background: '#eee', textAlign: 'center' }} >
-          <img src={image} alt={name} style={{ height: '100%' }} />
+          <img src={colorProduct?.image} alt={name} style={{ height: '100%' }} />
         </div>
       </td>
       <td>
@@ -27,8 +29,8 @@ export default function PurchaseProduct({ data }) {
             <div
               className="item-color"
               style={{
-                backgroundColor: color.code,
-                borderColor: (color.code === 'white' || color.code === '#fffff' ? 'gray' : 'white'),
+                backgroundColor: colorProduct?.color.color_code,
+                borderColor: (colorProduct?.color.color_code === 'white' || colorProduct?.color.color_code === '#fffff' ? 'gray' : 'white'),
                 boxSizing: 'border-box',
               }}
             />

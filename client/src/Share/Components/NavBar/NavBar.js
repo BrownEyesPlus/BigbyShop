@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux'
 export default function NavBar() {
   const pathname = (window.location.pathname)
 
-  const cart = useSelector(state => state.app.cart)
-  const cartCount = cart.reduce(
+  const cart = useSelector(state => state.app.cart) || []
+  const cartCount = cart?.reduce(
     (accumulator, currentValue) => accumulator + currentValue.quantity,
     0
   );
@@ -50,7 +50,7 @@ export default function NavBar() {
               <li className="nav-item">
                 <label className="cart-open" htmlFor="cart-check" style={{ fontSize: "24px", cursor: "pointer", marginBottom: "3px", marginLeft: "6px", marginRight: "6px" }}>
                   <i className="fa fa-shopping-cart" />
-                  {cartCount > 0 && (
+                  {((Number(cartCount) > 0)) && (
                     <div className="cart-count">
                       <span>{cartCount}</span>
                     </div>

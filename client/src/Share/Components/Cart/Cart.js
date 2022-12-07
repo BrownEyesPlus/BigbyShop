@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { actions } from '../../../reducers/app'
 
 import CartItem from '../CartItem/CartItem'
 import './cart.css'
@@ -8,7 +9,7 @@ export default function Cart() {
   const dispatch = useDispatch()
 
   const cart = useSelector(state => state.app.cart)
-  const tempTotalPrice = cart.reduce(
+  const tempTotalPrice = cart?.reduce(
     (accumulator, currentValue) => accumulator + currentValue.quantity * currentValue.price,
     0
   );
@@ -32,7 +33,7 @@ export default function Cart() {
             </label>
           </div>
           <div className="cart-items">
-            {cart.map((item, index) => (
+            {cart?.map((item, index) => (
               <CartItem key={index} data={item} />
             ))}
           </div>
