@@ -1,6 +1,9 @@
+import { useDispatch } from 'react-redux'
+import { actions } from '../../../reducers/app'
 import './purchaseProduct.css'
 
 export default function PurchaseProduct({ data }) {
+  const dispatch = useDispatch()
   const {
     id,
     name,
@@ -11,7 +14,17 @@ export default function PurchaseProduct({ data }) {
     quantity,
   } = data
 
-  // console.log(data)
+  const handleChangeQuantity = (value) => {
+    if (data && value) {
+      const product = { ...data, quantity: Number(value) }
+      dispatch(actions.setProductToCart(product))
+    }
+  }
+
+  const handleRemoveFromCart = (product) => {
+    if (product)
+      dispatch(actions.removeFromCart(product))
+  }
 
   return (
     <tr className="alert" role="alert">
@@ -44,16 +57,34 @@ export default function PurchaseProduct({ data }) {
         {price}
       </td>
       <td className="quantity">
-        {/* <div className="input-group">
-            <input type="text" name="quantity" className="quantity form-control input-number" defaultValue={2} min={1} max={100} />
-            </div> */}
-        {quantity}
+        <div className="input-group item-price d-flex">
+          {/* <div type="submit" style={{ borderRadius: '40px', border: 'solid 1px #ddd', width: '15px', height: '15px', fontSize: '9px', }}
+          className="quantity-btn"
+          // onClick={handleDecreaseQuantity}
+          >
+            <i className="fa fa-minus"></i>
+          </div>
+          {quantity}
+          <div type="submit" style={{ borderRadius: '40px', border: 'solid 1px #ddd', width: '15px', height: '15px', fontSize: '9px', }}
+          className="quantity-btn"
+          // onClick={handleIncreaseQuantity}
+          >
+            <i className="fa fa-plus"></i>
+          </div> */}
+          <input type="number" name="quantity" className="quantity form-control input-number" defaultValue={2} min={1} max={100} onKeyDown="return false"
+            value={quantity}
+            onChange={(e) => handleChangeQuantity(e.target.value)}
+          />
+        </div>
+        {/* {quantity} */}
       </td>
       <td>
         {quantity * price}
       </td>
       <td>
-        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+        <button type="button" className="close" data-dismiss="alert" aria-label="Close"
+          onClick={() => handleRemoveFromCart(data)}
+        >
           <span aria-hidden="true"><i className="fa fa-close" /></span>
         </button>
       </td>

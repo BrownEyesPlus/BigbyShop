@@ -17,8 +17,20 @@ export default function CartItem({ data }) {
   const color = colorProduct.color
 
   const handleRemoveFromCart = (product) => {
-    console.log(product)
     dispatch(actions.removeFromCart(product))
+  }
+
+  const handleDecreaseQuantity = () => {
+    if (data) {
+      if (data.quantity <= 1) dispatch(actions.removeFromCart(data))
+      dispatch(actions.decreaseFromCart(data))
+    }
+  }
+
+  const handleIncreaseQuantity = () => {
+    if (data) {
+      dispatch(actions.addToCart(data))
+    }
   }
 
   return (
@@ -59,11 +71,15 @@ export default function CartItem({ data }) {
                 {`${price} đ`}
               </div>
               <div className="item-price row">
-                <button type="submit">
+                <button type="submit"
+                  onClick={handleDecreaseQuantity}
+                >
                   <i className="fa fa-minus"></i>
                 </button>
                 {quantity}
-                <button type="submit">
+                <button type="submit"
+                  onClick={handleIncreaseQuantity}
+                >
                   <i className="fa fa-plus"></i>
                 </button>
               </div>
