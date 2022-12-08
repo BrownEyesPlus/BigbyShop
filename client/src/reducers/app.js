@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 export const initialState = {
   information: {},
   previewProduct: {},
-  cart: [],
+  cart: typeof document !== 'undefined' ? JSON.parse(localStorage.getItem('bibyCart')) || [] : [],
 }
 
 const slice = createSlice({
@@ -26,14 +26,18 @@ const slice = createSlice({
       }
       else
         state.cart = [...state.cart, action.payload]
+
+      localStorage.setItem('bibyCart', JSON.stringify(state.cart))
     },
     removeFromCart(state, action) {
       const isProductExist = state.cart.find(item => item.id === action.payload.id)
       if (isProductExist)
-        state.cart = state.cart.filter(item => item !== action.payload.id)
+        state.cart = state.cart.filter(item => item.id !== action.payload.id)
+      localStorage.setItem('bibyCart', JSON.stringify(state.cart))
     },
     clearCart(state) {
       state.cart = []
+      localStorage.setItem('bibyCart', JSON.stringify(state.cart))
     },
   }
 })

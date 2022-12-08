@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux'
 import './purchase.css'
 import PurchaseProduct from './PurchaseProduct/PurchaseProduct'
 
@@ -60,8 +61,10 @@ const fakePurchaseData = {
 
 export default function Purchase() {
 
-  const totalPrice = fakePurchaseData.list.reduce((total, value) => {
-    return total + value.price * value.quantity
+  const cart = useSelector(state => state.app.cart)
+
+  const totalPrice = cart.reduce((total, value) => {
+    return total + (value.price * value.quantity)
   }, 0)
 
   return (
@@ -88,7 +91,7 @@ export default function Purchase() {
                     </tr>
                   </thead>
                   <tbody>
-                    {fakePurchaseData.list.map((item, index) => (
+                    {cart?.map((item, index) => (
                       <PurchaseProduct key={index} data={item} />
                     ))}
                   </tbody>

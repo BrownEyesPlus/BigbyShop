@@ -1,10 +1,13 @@
+import { useDispatch } from 'react-redux'
+import { actions } from '../../../reducers/app'
 import './cartItem.css'
 
 export default function CartItem({ data }) {
+  const dispatch = useDispatch()
+
   const {
-    slug,
+    id,
     name,
-    // image,
     price,
     colorProduct,
     size,
@@ -12,6 +15,11 @@ export default function CartItem({ data }) {
   } = data
 
   const color = colorProduct.color
+
+  const handleRemoveFromCart = (product) => {
+    console.log(product)
+    dispatch(actions.removeFromCart(product))
+  }
 
   return (
     <div className="cart-item">
@@ -27,7 +35,10 @@ export default function CartItem({ data }) {
               <span>
                 {name}
               </span>
-              <i className="fa fa-close"></i>
+              <i
+                className="fa fa-close"
+                onClick={() => handleRemoveFromCart(data)}
+              ></i>
             </div>
             <div className="color-size row">
               <div
