@@ -74,3 +74,8 @@
     background-color: white;
     cursor: pointer;
 }
+
+.item-price button:hover {
+    color: brown;
+    border-color: brown;
+}

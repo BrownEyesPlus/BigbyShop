@@ -2,6 +2,9 @@ import { useSelector } from 'react-redux'
 import './purchase.css'
 import PurchaseProduct from './PurchaseProduct/PurchaseProduct'
 
+import { VIETNAM_PROVINCE } from '../../Constants/detailAdress'
+import { useEffect, useState } from 'react'
+
 const fakePurchaseData = {
   list: [
     {
@@ -67,6 +70,23 @@ export default function Purchase() {
     return total + (value.price * value.quantity)
   }, 0)
 
+  const [province, setProvince] = useState(null)
+  const [district, setDistrict] = useState(null)
+  const [ward, setWard] = useState(null)
+
+  useEffect(() => {
+    setDistrict(null)
+  }, [province])
+
+  useEffect(() => {
+    setWard(null)
+  }, [district])
+
+  const handleOrderSubmit = () => {
+
+
+  }
+
   return (
     <div className="purchase">
       <div className="container" >
@@ -118,43 +138,61 @@ export default function Purchase() {
                 <hr />
                 <span>Địa chỉ nhận hàng:</span>
 
-                <select className="purchase-address-select" name="cars" id="cars" >
-                  <option value="volvo" disabled>Tỉnh/ Thành Phố</option>
-                  <option value="saab">Hồ Chí Minh</option>
-                  <option value="mercedes">Hà Giang</option>
-                  <option value="audi">Cần Thơ</option>
+                <select className="purchase-address-select" name="cars" id="cars" onChange={(e) => setProvince(VIETNAM_PROVINCE.find((x => x.code === Number(e.target.value))))} >
+                  <option value="province">Tỉnh/ Thành Phố</option>
+                  {VIETNAM_PROVINCE.map((item, index) => (
+                    <option value={item.code} key={index}
+                      onClick={() => setProvince(item)}
+                    >
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
-                <select className="purchase-address-select" name="cars" id="cars" >
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
+                <select className="purchase-address-select" name="cars2" id="cars2" onChange={(e) => setDistrict(province.districts.find((x => x.code === Number(e.target.value))))} value={district?.code || 'province'}>
+                  <option value="province">Quận/ Huyện</option>
+                  {province?.districts.map((item, index) => (
+                    <option value={item.code} key={index}
+                      onClick={() => setDistrict(item)}
+                    >
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
-                <select className="purchase-address-select" name="cars" id="cars" >
-                  <option value="volvo">Volvo</option>
-                  <option value="saab">Saab</option>
-                  <option value="mercedes">Mercedes</option>
-                  <option value="audi">Audi</option>
+                <select className="purchase-address-select" name="cars3" id="cars3" onChange={(e) => setWard(district.wards.find((x => x.code === Number(e.target.value))))} value={ward?.code}>
+                  <option value="province">Phường/ Xã</option>
+                  {district?.wards.map((item, index) => (
+                    <option value={item.code} key={index}
+                      onClick={() => setWard(item)}
+                    >
+                      {item.name}
+                    </option>
+                  ))}
                 </select>
-
+                <div style={{ marginTop: '6px', fontSize: '14px' }}>
+                  Địa chỉ chi tiết (số nhà, v,v...):
+                </div>
                 <textarea className="purchase-address-textarea" id="w3review" name="w3review" rows="4" cols="50">
                 </textarea>
                 <hr />
                 <span>Phương thức thanh toán:</span>
                 <label className="purchase-method" htmlFor="method1">
-                  <input type="radio" className="purchase-method-radio" name="method" id="method1" autoComplete="off" value="value1" />
+                  <input type="radio" className="purchase-method-radio" name="method" id="method1" autoComplete="off" value="value1" checked={true} readOnly/>
                   <label className="purchase-option" htmlFor="method1" >
                     Thanh toán khi nhận hàng
                   </label>
                 </label>
-                <label className="purchase-method" htmlFor="method2">
+                {/* <label className="purchase-method" htmlFor="method2">
                   <input type="radio" className="purchase-method-radio" name="method" id="method2" autoComplete="off" value="value1" />
                   <label className="purchase-option" htmlFor="method2" >
                     Thanh toán online qua
                   </label>
-                </label>
+                </label> */}
                 <hr />
-                <button type="submit" className="btn-purchase">
+                <button
+                  type="submit"
+                  className="btn-purchase"
+                  onClick={handleOrderSubmit}
+                >
                   Thanh toán
                 </button>
               </div>
@@ -162,6 +200,6 @@ export default function Purchase() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
