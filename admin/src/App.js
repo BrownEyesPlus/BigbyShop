@@ -17,35 +17,35 @@ import OrderDetail from './Share/Components/OrderDetail/OrderDetail';
 function App() {
   return (
     <div className="App">
-        <SideBar/>
-        <div style={{width: 'calc(100% - 260px)', backgroundColor: '#E8E8E8'}}>
-          <TopBar/>
-          <Router>
+      <SideBar />
+      <div style={{ width: 'calc(100% - 260px)', backgroundColor: '#E8E8E8' }}>
+        <TopBar />
+        <Router>
           <Switch>
 
-            <Route exact path="/"> 
-              <Home/>
+            <Route exact path="/">
+              <Home />
             </Route>
 
-            <Route exact path="/products"> 
-              <Products/>
+            <Route exact path="/products">
+              <Products />
             </Route>
 
-            <Route exact path="/inputs"> 
-              <Inputs/>
+            <Route exact path="/inputs">
+              <Inputs />
             </Route>
 
-            <Route exact path="/orders"> 
-              <Orders/>
+            <Route exact path="/orders">
+              <Orders />
             </Route>
 
-            <Route exact path="/orderdetail"> 
-              <OrderDetail/>
+            <Route exact path="/orderdetail/:id">
+              <OrderDetail />
             </Route>
 
           </Switch>
-          </Router>
-        </div>
+        </Router>
+      </div>
     </div>
   );
 }

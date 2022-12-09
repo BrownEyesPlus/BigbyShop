@@ -4,63 +4,7 @@ import PurchaseProduct from './PurchaseProduct/PurchaseProduct'
 
 import { VIETNAM_PROVINCE } from '../../Constants/detailAdress'
 import { useEffect, useState } from 'react'
-
-const fakePurchaseData = {
-  list: [
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/image-10.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Red',
-        code: 'red'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/product-1.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'White',
-        code: 'white'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/image-10.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Green',
-        code: 'green'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-    {
-      id: 1,
-      slug: 'dauxanh',
-      image: 'assets/images/product-1.png',
-      name: `Sneakers Shoes 2020 For Men Fugiat voluptates`,
-      color: {
-        name: 'Gray',
-        code: 'gray'
-      },
-      size: 'L',
-      price: 300000,
-      quantity: 1,
-    },
-  ]
-}
+import { createOrder } from '../../lib'
 
 export default function Purchase() {
 
@@ -73,6 +17,7 @@ export default function Purchase() {
   const [province, setProvince] = useState(null)
   const [district, setDistrict] = useState(null)
   const [ward, setWard] = useState(null)
+  const [detailAddress, setDetailAddress] = useState(null)
 
   useEffect(() => {
     setDistrict(null)
@@ -83,8 +28,18 @@ export default function Purchase() {
   }, [district])
 
   const handleOrderSubmit = () => {
-
-
+    const items = cart?.map((item) => {
+      return { id: item.id, quantity: item.quantity }
+    })
+    const address1 = `${(detailAddress || '')}, ${ward?.name}, ${district?.name}, ${province?.name}`
+    if (items) {
+      const params = { address1, items }
+      const sendResquest = async () => {
+        const response = await createOrder(params)
+        console.log(response)
+      }
+      sendResquest()
+    }
   }
 
   return (
@@ -171,12 +126,14 @@ export default function Purchase() {
                 <div style={{ marginTop: '6px', fontSize: '14px' }}>
                   Địa chỉ chi tiết (số nhà, v,v...):
                 </div>
-                <textarea className="purchase-address-textarea" id="w3review" name="w3review" rows="4" cols="50">
+                <textarea className="purchase-address-textarea" id="w3review" name="w3review" rows="4" cols="50"
+                  onChange={(e) => setDetailAddress(e.target.value)}
+                >
                 </textarea>
                 <hr />
                 <span>Phương thức thanh toán:</span>
                 <label className="purchase-method" htmlFor="method1">
-                  <input type="radio" className="purchase-method-radio" name="method" id="method1" autoComplete="off" value="value1" checked={true} readOnly/>
+                  <input type="radio" className="purchase-method-radio" name="method" id="method1" autoComplete="off" value="value1" checked={true} readOnly />
                   <label className="purchase-option" htmlFor="method1" >
                     Thanh toán khi nhận hàng
                   </label>
