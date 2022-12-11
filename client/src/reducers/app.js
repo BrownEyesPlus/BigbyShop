@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getCookie, updateAccess } from '../helper'
 
 export const initialState = {
   information: {},
+  isLogedIn: typeof document !== 'undefined' && !!getCookie('access_token'),
   previewProduct: {},
   cart: typeof document !== 'undefined' ? JSON.parse(localStorage.getItem('bibyCart')) || [] : [],
 }
@@ -10,6 +12,23 @@ const slice = createSlice({
   name: 'app',
   initialState,
   reducers: {
+    login(state, action) {
+      if (action.payload.access_token) {
+        state.isLogedIn = true
+        updateAccess(action.payload.access_token)
+      }
+    },
+    logout(state, action) {
+      state.information = null
+      state.isLogedIn = false
+      updateAccess(null)
+    },
+    setUserInfor(state, action) {
+      if (!action.payload.code && getCookie('access_token')) {
+        state.isLogedIn = true
+        state.information = action.payload
+      }
+    },
     setPreviewProduct(state, action) {
       state.previewProduct = action.payload
     },

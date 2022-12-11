@@ -22,7 +22,7 @@
 }
 
 .right-navbar {
-  width: 50%;
+  width: -webkit-fill-available;
   display: flex;
   justify-content: right;
 }
@@ -79,4 +79,60 @@
 .cart-count span {
   font-size: 12px;
   color: white;
+}
+
+.dropdown-login {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: white;
+  padding: 12px;
+  width: auto;
+  box-shadow: 1px 1px 1px 1px gray;
+}
+
+.dropdown-login.dropdown {
+  display: block;
+
+}
+.dropdown-login ul{
+  width: max-content;
+}
+
+/* li.nav-item i{
+  min-width: 35px;
+  min-height: 35px;
+} */
+
+.dropdown-login.dropdown a {
+  text-decoration: none;
+  text-transform: none;
+  font-size: 16px;
+  padding: 0;
+}
+
+.dropdown-login.dropdown li {
+  padding: 6px 12px;
+}
+
+.logout-btn {
+  padding: 6px 12px;
+  text-align: center;
+  justify-content: center;
+  background-color: brown;
+  cursor: pointer;
+  color: white;
+}
+
+.nav-login-btn {
+  min-width: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-login-btn a {
+  color: darkblue;
+  text-decoration: none;
 }

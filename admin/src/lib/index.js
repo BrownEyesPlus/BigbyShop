@@ -23,7 +23,7 @@ export const login = async (params) => {
 export const getUserInfor = async (params) => {
   try {
     const response = await api.get(`profiles/me`, {
-      headers: { Authorization: `Bearer ${params || getCookie('access')}`, }
+      headers: { Authorization: `Bearer ${params || getCookie('access_token')}`, }
     });
     return response.data
   } catch (error) {

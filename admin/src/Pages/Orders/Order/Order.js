@@ -3,6 +3,8 @@ import './order.css'
 import dayjs from 'dayjs'
 
 export default function Order({ data }) {
+
+  // console.log(data)
   return (
     <tr className='admin-td'>
       <td>
@@ -19,7 +21,7 @@ export default function Order({ data }) {
         {dayjs(data.created_date).format('MM/d YYYY, hh:mm')}
       </td>
       <td>
-        {1235000} VND
+        {data?.total_price} VND
       </td>
       {/* <td>1232534641423</td> */}
       <td>Chờ duyệt</td>

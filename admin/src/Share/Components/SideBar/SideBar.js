@@ -15,7 +15,7 @@ export default function SideBar() {
         <ul className='sidebar-items'>
           <a href='/'>
           <li className='sidebar-item'>
-             <i className='fa fa-home'></i> Home 
+             <i className='fa fa-home'></i> Home
           </li>
           </a>
         </ul>
@@ -24,12 +24,12 @@ export default function SideBar() {
           Bán hàng
         </div>
         <ul className='sidebar-items'>
-          <li className='sidebar-item'>
-             <i className='fa fa-shopping-bag'></i> Tạo hóa đơn thanh toán 
-          </li>
+          {/* <li className='sidebar-item'>
+             <i className='fa fa-shopping-bag'></i> Tạo hóa đơn thanh toán
+          </li> */}
           <a href='/products'>
             <li className='sidebar-item'>
-            <i className='fa fa-suitcase'></i> Quản lý sản phẩm 
+            <i className='fa fa-suitcase'></i> Quản lý sản phẩm
             </li>
           </a>
           <a href='/orders'>
@@ -37,12 +37,12 @@ export default function SideBar() {
             <i className='fa fa-cubes'></i> Quản lý đơn hàng
             </li>
           </a>
-          <li className='sidebar-item'>
+          {/* <li className='sidebar-item'>
           <i className='fa fa-list-ul'></i> Quản lý danh mục
-          </li>
+          </li> */}
         </ul>
         <hr/>
-        
+
         <div className='sidebar-categorys'>
           Nhập hàng
         </div>
@@ -54,23 +54,23 @@ export default function SideBar() {
           </a>
         </ul>
         <hr/>
-        <div className='sidebar-categorys'>
+        {/* <div className='sidebar-categorys'>
           Bài viết
-        </div>
+        </div> */}
         <ul className='sidebar-items'>
-          <li className='sidebar-item'>
+          {/* <li className='sidebar-item'>
              <i className='fa fa-newspaper-o'></i> Thêm bài viết
           </li>
           <li className='sidebar-item'>
           <i className='fa fa-object-group'></i> Quản lý bài viết
-          </li>
+          </li> */}
         </ul>
-        <hr/>
+        {/* <hr/> */}
         <div className='sidebar-categorys'>
           Khác
         </div>
         <ul className='sidebar-items'>
-          <li className='sidebar-item'>
+          {/* <li className='sidebar-item'>
              <i className='fa fa-group'></i> Nhân viên
           </li>
           <li className='sidebar-item'>
@@ -78,7 +78,7 @@ export default function SideBar() {
           </li>
           <li className='sidebar-item'>
           <i className='fa fa-toggle-right'></i> Slides
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>
