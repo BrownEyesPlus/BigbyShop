@@ -1,42 +1,49 @@
-import { ORDER } from '../../../Constants'
 import './purchaseOrder.css'
+import dayjs from 'dayjs'
 
-export default function PurchaseOrder({ data }) {
+import { ORDER } from '../../../Constants'
+
+export default function PurchaseOrder({ data, index }) {
   const {
     id,
-    uuid,
+    // uuid,
     status,
     total_price,
-    created_at,
-    updated_at
+    created_date,
+    updated_date
   } = data
 
   return (
-    <tr className="alert" role="alert">
-      <td>
-        <></>
-      </td>
-      <td>
-        <div className="email">
-          <span>
-            {uuid}
-          </span>
-        </div>
-      </td>
-      <td>
-        <div className={`order-status ${ORDER.status[status].style}`}>
-          {ORDER.status[status].name}
-        </div>
-      </td>
-      <td className="order-price">
-        {total_price}
-      </td>
-      <td>
-        {created_at}
-      </td>
-      <td>
-        {updated_at}
-      </td>
-    </tr>
+    <>
+      {data && (
+        <tr className="alert" role="alert">
+          <td>
+            <></>
+          </td>
+          <td>
+            <div className="email">
+              <span>
+                #{index}
+              </span>
+            </div>
+          </td>
+          <td>
+            <div className={`order-status ${ORDER.status[status].style}`}>
+              {ORDER.status[status].name}
+            </div>
+          </td>
+          <td className="order-price">
+            {total_price}
+          </td>
+          <td>
+            {dayjs(created_date).format('D/MM YYYY, hh:mm')}
+          </td>
+          <td>
+            {dayjs(updated_date).format('D/MM YYYY, hh:mm')}
+          </td>
+        </tr>
+      )}
+    </>
+
   )
 }

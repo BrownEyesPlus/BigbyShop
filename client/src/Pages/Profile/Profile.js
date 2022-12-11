@@ -1,5 +1,8 @@
 import './profile.css'
+import { useEffect, useState } from 'react'
+
 import PurchaseOrder from './PurchaseOrder/PurchaseOrder'
+import { getOrdersUser } from '../../lib'
 
 const fakeProfileData = {
   id: 1,
@@ -57,7 +60,26 @@ const fakeOrdersData = {
   ]
 }
 
+
+
 export default function Profile() {
+
+  const [orders, setOrders] = useState()
+
+  const sendRequest = async () => {
+    const response = await getOrdersUser();
+    if (response?.code) {
+      return response
+    }
+    setOrders(response)
+    return response
+  }
+
+  useEffect(() => {
+    sendRequest()
+  }, [])
+
+  console.log(orders)
 
   return (
     <div className="profile">
@@ -139,7 +161,7 @@ export default function Profile() {
             <thead className="thead-primary">
               <tr>
                 <th>&nbsp;</th>
-                <th>Mã đơn hàng</th>
+                <th>Đơn của bạn</th>
                 <th>Trạng thái</th>
                 <th>Giá trị (vnd)</th>
                 <th>Ngày ghi nhận</th>
@@ -148,8 +170,8 @@ export default function Profile() {
               </tr>
             </thead>
             <tbody>
-              {fakeOrdersData?.list.map((item, index) => (
-                <PurchaseOrder key={index} data={item} />
+              {orders?.map((item, index) => (
+                <PurchaseOrder key={index} data={item} index={orders.length - index} />
               ))}
             </tbody>
           </table>

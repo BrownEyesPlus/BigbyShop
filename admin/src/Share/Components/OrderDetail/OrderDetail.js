@@ -58,7 +58,7 @@ export default function OrderDetail() {
             <div className='purchase-detail col-4'>
               <div className='purchase-detail-wrap'>
                 <div className='purchase-detail-client-name'>
-                  Khách hàng: {orderDetail.user?.name}
+                  Khách hàng: {orderDetail?.user?.name}
                 </div>
                 <div className='purchase-detail-date'>
                   Ngày: 12/03/2022
@@ -67,7 +67,7 @@ export default function OrderDetail() {
                   <span>Số điện thoại: </span> 01234345798
                 </div>
                 <div className='purchase-detail-address mt-6px'>
-                  <span>Địa chỉ nhận hàng: </span> {orderDetail[0]?.order.address1}
+                  <span>Địa chỉ nhận hàng: </span> {orderDetail ? orderDetail[0]?.order.address1 : ''}
                 </div>
                 <hr className='mt-12px' />
                 <div className='purchase-detail-price mt-12px'>

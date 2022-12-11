@@ -5,6 +5,7 @@ import PurchaseProduct from './PurchaseProduct/PurchaseProduct'
 import { VIETNAM_PROVINCE } from '../../Constants/detailAdress'
 import { useEffect, useState } from 'react'
 import { createOrder } from '../../lib'
+import { getCookie } from '../../helper'
 
 export default function Purchase() {
 
@@ -33,7 +34,11 @@ export default function Purchase() {
     })
     const address1 = `${(detailAddress || '')}, ${ward?.name}, ${district?.name}, ${province?.name}`
     if (items) {
-      const params = { address1, items }
+      const params = {
+        address1,
+        items,
+        access_token: getCookie('access_token')
+      }
       const sendResquest = async () => {
         const response = await createOrder(params)
         console.log(response)

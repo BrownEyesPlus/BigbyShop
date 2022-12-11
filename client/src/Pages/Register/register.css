@@ -4,7 +4,7 @@
 }
 
 .register-wrap {
-    height: 100vh;
+    min-height: 100vh;
     background: rgba(38, 22, 53, 0.349);
 }
 
@@ -35,7 +35,7 @@
     margin: 6px 2px;
     height: 36px;
     font-size: 16px;
-    padding: 10px;
+    padding: 0 10px;
     border-radius: 6px;
     outline: none;
     border: solid 1px gray;

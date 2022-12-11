@@ -228,11 +228,9 @@ const fakeHomeData = {
 }
 
 export default function Shop() {
-	// const { id } = useParams()
-
 	const [baseProducts, setBaseProduct] = useState({})
 
-  const sendRegisterInfor = async () => {
+  const sendRequest = async () => {
     const response = await getBaseProduct();
     if (response?.code) {
       return response.detail
@@ -242,7 +240,7 @@ export default function Shop() {
   }
 
   useEffect(() => {
-    sendRegisterInfor()
+    sendRequest()
   }, [])
 
 	return (
@@ -442,6 +440,7 @@ export default function Shop() {
 				<div className="row product-lists">
 					{baseProducts?.results?.map((product, index) => (
 						<ProductListItem data={product} key={index} />
+						// <></>
 					))}
 				</div>
 			</div>
