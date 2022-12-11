@@ -20,6 +20,12 @@ select#gender option[value="others"] { background-image:url(others.png); } */
     height: 46px;
 }
 
+.admin-cell-td.product-img img {
+    width: 38px;
+    height: 48px;
+    object-fit: cover;
+}
+
 .admin-cell-td input {
     height: 30px;
     width: 240px;

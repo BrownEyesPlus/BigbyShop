@@ -78,3 +78,13 @@ export const getOrderDetail = async (id) => {
     return error.response.data || null
   }
 }
+
+
+export const getSizes = async (params) => {
+  try {
+    const response = await api.get(`/sizes/`);
+    return response.data
+  } catch (error) {
+    return error.response.data || null
+  }
+}
