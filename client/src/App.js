@@ -23,6 +23,7 @@ import Profile from './Pages/Profile/Profile.js';
 import { store } from './store/store';
 import PreviewProductModal from './Share/Modals/PreviewProductModal.js';
 import NotFound from './Share/Components/NotFound/index.js';
+import OrderDetail from './Pages/OrderDetail/OrderDetail.js';
 
 function App() {
   return (
@@ -66,6 +67,9 @@ function App() {
             </Route>
             <Route exact path="/profile">
               <Profile />
+            </Route>
+            <Route exact path="/order/:id">
+              <OrderDetail />
             </Route>
             <Route path="*" >
               <NotFound />

@@ -1,7 +1,18 @@
-import ProductDetail from '../ProductDetail/ProductDetail'
 import './product.css'
+import { useDispatch, useSelector } from 'react-redux'
+
+import ProductDetail from '../ProductDetail/ProductDetail'
+import { actions } from '../../../reducers/app'
 
 export default function Product({ data }) {
+  const dispatch = useDispatch()
+
+  const handleOpenModal = () => {
+    // if (data)
+    console.log(data)
+      dispatch(actions.setPreviewProduct(data))
+  }
+
   return (
     <tr className='admin-td'>
       <td>
@@ -26,14 +37,16 @@ export default function Product({ data }) {
       <td>
         <div className='table-actions'>
           <label htmlFor='product-detail-check' className='table-read' style={{ color: 'green' }}>
-            <i className='fa fa-eye'></i>
+            <i className='fa fa-eye'
+              onClick={handleOpenModal}
+            ></i>
           </label>
           <input type="checkbox" className="product-detail-check hidden-check" name="product-detail-checkbox" id="product-detail-check" autoComplete="off" />
-          <ProductDetail />
+          {/* <ProductDetail /> */}
 
-          <button className='table-update'>
+          {/* <button className='table-update'>
             <i className='fa fa-pencil-square-o'></i>
-          </button>
+          </button> */}
           <button className='table-delete' style={{ color: 'brown' }}>
             <i className='fa fa-trash'></i>
           </button>

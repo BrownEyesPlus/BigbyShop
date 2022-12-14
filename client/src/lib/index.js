@@ -79,3 +79,23 @@ export const getOrdersUser = async (params) => {
     return error.response.data || null
   }
 }
+
+
+export const getSizes = async (params) => {
+  try {
+    const response = await api.get(`/sizes/`);
+    return response.data
+  } catch (error) {
+    return error.response.data || null
+  }
+}
+
+export const getOrderDetail = async (id) => {
+  try {
+    const response = await api.get(`/orders/${id}`);
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return error.response.data || null
+  }
+}

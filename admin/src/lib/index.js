@@ -74,7 +74,50 @@ export const getOrderDetail = async (id) => {
     return response.data
   } catch (error) {
     console.log(error)
-
     return error.response.data || null
   }
 }
+
+
+export const getSizes = async (params) => {
+  try {
+    const response = await api.get(`/sizes/`);
+    return response.data
+  } catch (error) {
+    return error.response.data || null
+  }
+}
+
+export const getInputs = async (params) => {
+  try {
+    const response = await api.get(`/inputs/`);
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export const getInputDetail = async (id) => {
+  try {
+    const response = await api.get(`/inputs/${id}`);
+    return response.data
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+export const createInput = async (params) => {
+  try {
+    const response = await api.post(`/inputs/`, params, {
+      headers: { Authorization: `Bearer ${getCookie('access_token')}`, }
+    });
+    return response.data
+  } catch (error) {
+    // return error.response.data || null
+    console.log(error)
+    return null
+  }
+}
+

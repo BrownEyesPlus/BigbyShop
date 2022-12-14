@@ -7,10 +7,11 @@ export default function PurchaseOrder({ data, index }) {
   const {
     id,
     // uuid,
+    // order,
     status,
     total_price,
     created_date,
-    updated_date
+    updated_date,
   } = data
 
   return (
@@ -40,6 +41,12 @@ export default function PurchaseOrder({ data, index }) {
           </td>
           <td>
             {dayjs(updated_date).format('D/MM YYYY, hh:mm')}
+          </td>
+          <td>
+            <a href={`order/${id}`} className="detail-btn">
+              <i className="fa fa-eye "></i>
+              Xem
+            </a>
           </td>
         </tr>
       )}

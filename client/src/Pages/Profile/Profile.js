@@ -79,7 +79,7 @@ export default function Profile() {
     sendRequest()
   }, [])
 
-  console.log(orders)
+  // console.log(orders)
 
   return (
     <div className="profile">

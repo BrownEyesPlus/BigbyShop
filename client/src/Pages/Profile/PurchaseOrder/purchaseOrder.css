@@ -61,7 +61,8 @@
 }
 
 .order-status.wait {
-    color: gray;
+    /* color: gray; */
+    color: orange;
 }
 
 .order-status.transporting {
@@ -74,4 +75,13 @@
 
 .order-status.cancel {
     color: darkred;
+}
+
+.detail-btn {
+    text-decoration: none;
+    padding: 3px 12px;
+}
+
+.detail-btn i{
+    margin-right: 3px;
 }
