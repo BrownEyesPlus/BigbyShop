@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 
 import Input from './Input/Input'
 import NewProduct from '../../Share/Components/NewProduct/NewProduct'
-import { getBaseProduct, getSizes } from '../../lib'
+import { createInput, getBaseProduct, getInputs, getSizes } from '../../lib'
 import NewItem from './NewItem'
 
 export default function Inputs() {
 
+  const [inputs, setInputs] = useState()
+  const [inputsCount, setInputsCount] = useState(0)
   const [baseProducts, setBaseProducts] = useState()
   const [baseProduct, setBaseProduct] = useState()
   const [productColors, setProductColors] = useState()
@@ -17,20 +19,53 @@ export default function Inputs() {
   const [quantity, setQuantity] = useState()
   const [price, setPrice] = useState()
   const [inputDetails, setInputDetails] = useState([])
+  const [successNotification, setSuccessNotification] = useState(null)
+
+  useEffect(() => {
+    if (inputDetails.length > 0) {
+      setSuccessNotification(null)
+    }
+  }, [inputDetails])
 
   useEffect(() => {
     const sendRequest = async () => {
       const response = await getBaseProduct()
       const response2 = await getSizes()
+      const response3 = await getInputs()
       if (response) {
         setBaseProducts(response.results)
       }
       if (response2) {
         setSizes(response2.results)
       }
+      if (response3) {
+        setInputs(response3.results)
+        setInputsCount(response3.count)
+      }
     }
     sendRequest()
   }, [])
+
+  useEffect(() => {
+    if (successNotification) {
+      const sendRequest = async () => {
+        const response = await getBaseProduct()
+        const response2 = await getSizes()
+        const response3 = await getInputs()
+        if (response) {
+          setBaseProducts(response.results)
+        }
+        if (response2) {
+          setSizes(response2.results)
+        }
+        if (response3) {
+          setInputs(response3.results)
+          setInputsCount(response3.count)
+        }
+      }
+      sendRequest()
+    }
+  }, [successNotification])
 
   const handleSetBaseProduct = (id) => {
     const isExist = baseProducts.find(x => x.id === Number(id))
@@ -49,7 +84,31 @@ export default function Inputs() {
   }
 
   const handleAddProduct = () => {
-
+    const isValid = productColors && productColor
+    if (isValid) {
+      const newInputDetail = {
+        base_product: baseProduct?.id,
+        product_color: productColor?.id,
+        size: size.id,
+        quantity,
+        price,
+      }
+      const isExist = inputDetails.find(x => Number(x.product_color) === Number(productColor?.id) && Number(x.size) === Number(size.id))
+      if (isExist) {
+        setInputDetails(inputDetails.map(item => {
+          if ((Number(item.product_color) === Number(productColor?.id) && Number(item.size) === Number(size.id)))
+            return {
+              ...item, quantity: item.quantity + newInputDetail.quantity
+            }
+          return item
+        }))
+      } else {
+        setInputDetails([...inputDetails, newInputDetail])
+      }
+    }
+    else {
+      console.log('loi xay ra')
+    }
   }
 
   const handleAddToInput = () => {
@@ -80,6 +139,20 @@ export default function Inputs() {
     }
   }
 
+  const handleCreateInput = () => {
+    const sendRequest = async () => {
+      const response = await createInput(inputDetails)
+      if (response) {
+        setInputDetails([])
+        setSuccessNotification('Nhập hàng thành công')
+        console.log('Succsess!')
+      }
+    }
+    if (inputDetails.length > 0) {
+      sendRequest()
+    }
+  }
+
   const handleSetSize = (id) => {
     const isExist = sizes?.find(x => x.id === Number(id))
     if (isExist)
@@ -98,6 +171,7 @@ export default function Inputs() {
             Nhập hàng
           </div>
           < div className="admin-page-content">
+            {successNotification && <p className="success-input">{successNotification}</p>}
             <input type="checkbox" className="new-product-check hidden-check" name="new-product-checkbox" id="new-product-check" autoComplete="off" />
             <NewProduct />
             <table className="admin-table">
@@ -147,7 +221,7 @@ export default function Inputs() {
                   <div className="admin-cell-td color-td row">
                     <div
                       className="admin-color-td"
-                      style={{ background: productColor?.color.color_code || "#eee" }}
+                      style={{ background: productColor?.color?.color_code || "#eee" }}
                     />
                     <input
                       list="admin-color1"
@@ -161,7 +235,7 @@ export default function Inputs() {
                   <datalist id="admin-color1">
                     {productColors?.map((item, index) => (
                       <option value={item.id} key={index}>
-                        {item.color.name}
+                        {item.color?.name}
                       </option>
                     ))}
                   </datalist>
@@ -223,25 +297,28 @@ export default function Inputs() {
               </tr>
             </table>
           </div>
-
+          {inputDetails.length > 0 && (
+            <div className="create-input-btn">
+              <button onClick={handleCreateInput}>
+                Nhập hàng
+              </button>
+            </div>
+          )}
           <div className="inputs-history-title">
             Lịch sử nhập hàng:
           </div>
           < div className="admin-page-content">
             <table className="admin-table">
               <tr className="admin-th">
-                <th>Tên sản phẩm</th>
-                <th>Mã sản phẩm</th>
+                <th>STT</th>
                 <th>Số lượng</th>
-                <th>Giá nhập (vnd)</th>
+                {/* <th>Tổng đơn (vnd)</th> */}
                 <th>Ngày</th>
                 <th className="th-actions">Thao tác</th>
               </tr>
-              <Input />
-              <Input />
-              <Input />
-              <Input />
-              <Input />
+              {inputs?.map((item, index) => (
+                <Input data={item} index={index} key={index} count={inputsCount} />
+              ))}
             </table>
           </div>
         </div>

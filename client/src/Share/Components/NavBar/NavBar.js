@@ -22,8 +22,8 @@ export default function NavBar() {
     0
   );
 
-  console.log(isLogedIn)
-  console.log(getCookie('access_token'))
+  // console.log(isLogedIn)
+  // console.log(getCookie('access_token'))
 
   const handleLogout = () => {
     dispatch(actions.logout())

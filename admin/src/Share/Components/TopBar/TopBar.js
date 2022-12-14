@@ -32,7 +32,7 @@ export default function TopBar() {
 
               <div style={{borderLeft: 'solid 1px gray', margin: '0 12px'}}></div>
               <div className='admin-avatar center-box'>
-                Linh My <img src='assets/images/bigby1.jpg' alt=''/>
+                Linh My <img src='/images/common/default_profile.jpg' alt=''/>
               </div>
             </div>
           </div>

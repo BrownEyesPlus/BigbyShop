@@ -1,6 +1,6 @@
 *, ::after, ::before {
   box-sizing: border-box;
-}   
+}
 
 .App {
   display: flex;
@@ -148,4 +148,17 @@
 
 .hidden {
   visibility: hidden;
+}
+
+.product-detail-modal {
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.795);
+  height: 100vh;
+  width: 100vw;
+  /* display: ; */
+  visibility: hidden;
+  transition: 0.3s;
 }

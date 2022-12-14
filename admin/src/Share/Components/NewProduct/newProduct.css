@@ -52,7 +52,7 @@
 
 .product-image {
     height: 100%;
-    background-image: url(./../../../../public/assets/images/background-upload-clothes.jpg);
+    /* background-image: url(./../../../../public/assets/images/background-upload-clothes.jpg); */
     background-size: contain!important;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -151,7 +151,7 @@ span.product-origin-price {
 }
 
 .product-sizes {
-    
+
 }
 
 .product-size {
@@ -181,7 +181,7 @@ span.product-origin-price {
 
 .new-product-action {
     width: calc(50% - 3px);
-    
+
     border-radius: 7px;
     text-align: center;
     padding: 9px 0px;
