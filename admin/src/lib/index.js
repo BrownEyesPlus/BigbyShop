@@ -84,6 +84,24 @@ export const getSizes = async (params) => {
     const response = await api.get(`/sizes/`);
     return response.data
   } catch (error) {
+    return null
+  }
+}
+
+export const getTypes = async (params) => {
+  try {
+    const response = await api.get(`/types/`);
+    return response.data
+  } catch (error) {
+    return error.response.data || null
+  }
+}
+
+export const getColors = async (params) => {
+  try {
+    const response = await api.get(`/colors/`);
+    return response.data
+  } catch (error) {
     return error.response.data || null
   }
 }
@@ -121,3 +139,21 @@ export const createInput = async (params) => {
   }
 }
 
+export const createBaseProduct = async (params) => {
+  try {
+    let formData = new FormData()
+    Object.keys(params).forEach(key => {
+      formData.append(`${key}`, params[key])
+    })
+    const response = await api.post(`/base_products/`, formData, {
+      headers: { Authorization: `Bearer ${getCookie('access_token')}`, }
+    })
+    return response.data
+  }
+  catch (error) {
+    return {
+      status: error.status,
+      error: error.response.data
+    }
+  }
+}
