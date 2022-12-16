@@ -1,4 +1,14 @@
-export default function NewItem({ data, productColor, baseProduct, size, quantity, price }) {
+export default function NewItem({ data, productColor, baseProduct, size, quantity, price, changeQuantity }) {
+
+  const handleSetQuantity = (value) => {
+    const newQuantity = {
+      product_color: productColor?.id,
+      size: size?.id,
+      quantity: value
+    }
+    // console.log(newQuantity, data)
+  }
+
   return (
     <tr className="admin-td">
       <td>
@@ -22,7 +32,6 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
             value={productColor?.color.name}
             disabled
             readOnly
-          // onChange={e => handleSetProductColor(e.target.value)}
           />
 
         </div>
@@ -31,12 +40,10 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
         <div className="admin-cell-td size-td row">
           <input
             list="admin-size"
-            value={size?.id}
+            value={size?.name}
             disabled
             readOnly
-          // onChange={e => handleSetSize(e.target.value)}
           />
-
         </div>
       </td>
       <td>
@@ -46,10 +53,10 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
             id="quantity"
             name="quantity"
             min={1}
+            onChange={e => handleSetQuantity(Number(e.target.value))}
             value={quantity}
-            // onChange={e => setQuantity(Number(e.target.value))}
-            disabled
-            readOnly
+          // disabled
+          // readOnly
           />
         </div>
       </td>
@@ -61,9 +68,8 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
             name="money"
             min={1}
             value={price}
+            disabled
             readOnly
-          // disabled
-          // onChange={e => setPrice(Number(e.target.value))}
           />
         </div>
       </td>

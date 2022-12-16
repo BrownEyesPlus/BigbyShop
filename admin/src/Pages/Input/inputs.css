@@ -5,15 +5,22 @@ option:before {
     padding-right: 10px;
     padding-left: 5px;
     color: #fff;
-  }
+}
 
-  select#gender option[value="male"]   { background: red;
-font-size: 30px;   }
+select#gender option[value="male"] {
+    background: red;
+    font-size: 30px;
+}
+
 /* select#gender option[value="female"] { background-image:url(female.png); }
 select#gender option[value="others"] { background-image:url(others.png); } */
 
 .admin-cell-td {
     align-items: center;
+}
+
+.admin-cell-td.product-img {
+    position: relative;
 }
 
 .admin-cell-td img {
@@ -28,9 +35,21 @@ select#gender option[value="others"] { background-image:url(others.png); } */
 
 .admin-cell-td input {
     height: 30px;
-    width: 240px;
+    /* width: 240px; */
     padding: 0px 6px;
     margin-left: 6px;
+}
+
+.admin-cell-td select {
+    height: 30px;
+    /* width: 240px; */
+    padding: 0px 6px;
+    margin-left: 6px;
+}
+
+.admin-cell-td select option {
+    height: 30px;
+    padding: 8px 16px;
 }
 
 .admin-cell-td button {
@@ -71,19 +90,19 @@ select#gender option[value="others"] { background-image:url(others.png); } */
     font-weight: 500;
 }
 
-.color-td input{
+.color-td input {
     width: 160px;
 }
 
-.size-td input{
+.size-td input {
     width: 70px;
 }
 
-.quantity-td input{
+.quantity-td input {
     width: 100px;
 }
 
-.money-td input{
+.money-td input {
     width: 160px;
 }
 
@@ -95,7 +114,6 @@ select#gender option[value="others"] { background-image:url(others.png); } */
     border: solid 1px blue;
     color: blue;
     border-radius: 3px;
-    /* text-transform: uppercase; */
     font-size: 13px;
     font-weight: 600;
 }
@@ -136,7 +154,7 @@ select#gender option[value="others"] { background-image:url(others.png); } */
     margin: 12px 0;
 }
 
-.create-input-btn button{
+.create-input-btn button {
     padding: 6px 24px;
     font-size: 16px;
     border: solid 1px;
@@ -148,7 +166,7 @@ select#gender option[value="others"] { background-image:url(others.png); } */
     transition: .4s;
 }
 
-.create-input-btn button:hover{
+.create-input-btn button:hover {
     background-color: darkgreen;
     color: white;
 }
@@ -156,4 +174,8 @@ select#gender option[value="others"] { background-image:url(others.png); } */
 .success-input {
     color: green;
     text-align: center;
+}
+
+.d-flex {
+    display: flex;
 }

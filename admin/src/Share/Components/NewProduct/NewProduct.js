@@ -1,9 +1,63 @@
 import './newProduct.css'
 import { useEffect, useState } from 'react'
+import { createBaseProduct, getColors, getTypes } from '../../../lib'
 
-export default function NewProduct() {
+export default function NewProduct({ addBaseProductSuccess }) {
+
+  const [types, setTypes] = useState([])
+  const [colors, setColors] = useState([])
+  const [name, setName] = useState()
   const [image, setImage] = useState()
+  const [type, setType] = useState()
+  const [discount, setDiscount] = useState()
+  const [codeName, setCodeName] = useState()
+  const [price, setPrice] = useState()
+  const [description, setDescription] = useState()
+  const [color, setColor] = useState()
+  const [errors, setErrors] = useState({})
+  // const [image, setImage] = useState()
 
+  useEffect(() => {
+    const sendRequest = async () => {
+      const response = await getTypes()
+      const colorResponse = await getColors()
+      if (response) {
+        setTypes(response.results)
+        setType(Number(response.results[0].id))
+      }
+      if (colorResponse) {
+        setColors(colorResponse.results)
+        setColor(Number(colorResponse.results[0].id))
+      }
+    }
+    sendRequest()
+  }, [])
+
+  const handleCreateBaseProduct = (e) => {
+    e.preventDefault()
+    const newBaseProduct = {
+      name,
+      image,
+      type,
+      discount: 1,
+      code_name: codeName,
+      price,
+      description: 'Somwthing',
+      color,
+    }
+
+    console.log('daixah')
+    const sendRequest = async () => {
+      const response = await createBaseProduct(newBaseProduct)
+      if (!response.error) {
+        setErrors({})
+        addBaseProductSuccess()
+        return
+      }
+      setErrors(response.error)
+    }
+    sendRequest()
+  }
 
   const getImage = (image) => {
     if (typeof (image) === 'object' && image !== null) {
@@ -13,6 +67,9 @@ export default function NewProduct() {
   }
 
   const displayImage = getImage(image)
+
+  console.log(colors, color)
+  console.log(types, type)
 
   return (
     <div className="new-product-frame">
@@ -26,51 +83,89 @@ export default function NewProduct() {
           <div className="new-product-wrap">
             <div className="product-image-frame col-6">
               <label htmlFor="product-image-upload" className="product-image center-box"
-
                 style={{ background: `url(${displayImage || '/assets/images/background-upload-clothes.jpg'})` }}
-
               >
                 <form action="/action_page.php">
                   <input type="file" id="product-image-upload" name="filename" onChange={e => setImage(e.target.files[0])} />
                 </form>
               </label>
             </div>
-            <div className="product-content col-4">
-              <input className="product-title mt-12px"
-                type="text" id="product-name" name="product-name" placeholder="Tên sản phẩm..." />
+            <form className="product-content col-4" onSubmit={handleCreateBaseProduct}>
+              {Object.keys(errors).length > 0 && <p> Đã có lỗi </p>}
+              <input
+                className="product-title mt-12px"
+                type="text" id="product-name"
+                name="product-name"
+                placeholder="Tên sản phẩm..."
+                value={name}
+                onChange={e => setName(e.target.value)}
+                required
+              />
               <span className="product-code">
                 Mã sản phẩm:
-                <input className="mt-12px ml-12px"
-                  type="text" id="product-code" name="product-code" placeholder="" />
+                <input
+                  className="mt-12px ml-12px"
+                  type="text" id="product-code"
+                  name="product-code" placeholder=""
+                  value={codeName}
+                  onChange={e => setCodeName(e.target.value)}
+                  required
+                />
               </span>
               <div className="mt-12px product-price">
                 Giá bán (vnd):
-                <input className=""
-                  type="number" id="product-price" name="product-price" placeholder="" min={0} />
+                <input
+                  className="price-field"
+                  type="number"
+                  id="product-price"
+                  name="product-price"
+                  placeholder=""
+                  min={0}
+                  value={price}
+                  onChange={e => setPrice(Number(e.target.value))}
+                  required
+                />
               </div>
-
-
               <hr className="product-content-line mt-12px hidden" />
               <div className="product-type">
                 <span> Thể loại: </span>
-                <input className="ml-12px"
-                  list="admin-type" defaultValue="" />
-                <datalist id="admin-type">
+                <select name="types" id="types" className="ml-12px" value={type || 1} onChange={e => setType(e.target.value)}>
+                  {types.map((item, index) => (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+                {/* <input className="ml-12px"
+                  list="admin-type" defaultValue="" /> */}
+                {/* <datalist id="admin-type">
                   <option value="Mặc định">
                     Mặc định
                   </option>
                   <option value="Xanh">
                     Xanh
                   </option>
-                </datalist>
+                </datalist> */}
               </div>
               <div className="product-color-name row">
                 <span> Màu sắc: </span>
-                <input className="product-color-choose ml-12px mt-12px" type="color" id="favcolor" name="favcolor" defaultValue="#ff0000" />
-                {/* <label htmlFor="favcolor" className="product-color" style={{backgroundColor: "gray"}}>
-                            </label> */}
+                {/* <input className="product-color-choose ml-12px mt-12px" type="color" id="favcolor" name="favcolor" defaultValue="#ff0000" />
                 <input className="ml-12px" name="favcolor"
-                  list="admin-color" defaultValue="Mặc định" />
+                  list="admin-color" defaultValue="Mặc định" /> */}
+                <div
+                  className="admin-color-td ml-12px"
+                  style={{ background: colors?.find(x => x.id === Number(color))?.color_code || "#eee" }}
+                />
+                <select name="Size" id="colors-product" onChange={e => setColor(e.target.value)} defaultValue={colors ? colors[0]?.id : 1}>
+                  <option disabled>
+                    Chọn màu
+                  </option>
+                  {colors?.map((item, index) => (
+                    <option value={item.id} key={index}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
                 <datalist id="admin-color">
                   <option value="Cam">
                     Cam
@@ -83,7 +178,6 @@ export default function NewProduct() {
                   </option>
                 </datalist>
               </div>
-
               <hr className="product-content-line mt-12px" />
               <div className="product-description">
                 <span>Mô tả:</span>
@@ -99,12 +193,16 @@ export default function NewProduct() {
                   <div className="new-product-action btn-cancel">
                     Hủy
                   </div>
-                  <div className="new-product-action btn-add">
+                  <button
+                    className="new-product-action btn-add"
+                    // onClick={}
+                    type="submit"
+                  >
                     Thêm mới
-                  </div>
+                  </button>
                 </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

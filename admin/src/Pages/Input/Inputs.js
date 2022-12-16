@@ -5,6 +5,7 @@ import Input from './Input/Input'
 import NewProduct from '../../Share/Components/NewProduct/NewProduct'
 import { createInput, getBaseProduct, getInputs, getSizes } from '../../lib'
 import NewItem from './NewItem'
+import BaseProductList from './BaseProductList'
 
 export default function Inputs() {
 
@@ -20,6 +21,8 @@ export default function Inputs() {
   const [price, setPrice] = useState()
   const [inputDetails, setInputDetails] = useState([])
   const [successNotification, setSuccessNotification] = useState(null)
+  const [searchText, setSearchText] = useState('')
+  const [dropDown, setDropdown] = useState(false)
 
   useEffect(() => {
     if (inputDetails.length > 0) {
@@ -45,6 +48,11 @@ export default function Inputs() {
     }
     sendRequest()
   }, [])
+
+  useEffect(() => {
+    if (sizes)
+      setSize(sizes[0])
+  }, [sizes])
 
   useEffect(() => {
     if (successNotification) {
@@ -73,6 +81,7 @@ export default function Inputs() {
       setBaseProduct(baseProducts.find(x => x.id === Number(id)))
       setProductColors(baseProducts.find(x => x.id === Number(id))?.product_colors)
       setProductColor(baseProducts.find(x => x.id === Number(id))?.product_colors[0])
+      setSearchText(isExist.name)
     }
   }
 
@@ -159,6 +168,12 @@ export default function Inputs() {
       setSize(isExist)
   }
 
+  const handleSetSearchText = (value) => {
+    setSearchText(value)
+    if (value.length > 0)
+      setDropdown(true)
+  }
+
   console.log(sizes, size)
   // console.log(baseProducts?.product_colors)
   console.log(inputDetails)
@@ -195,63 +210,70 @@ export default function Inputs() {
               ))}
               <tr className="admin-td">
                 <td>
-                  <div className="admin-cell-td row product-img">
+                  <div className="admin-cell-td d-flex product-img">
                     <img src={productColor?.image?.replace('http://127.0.0.1:8000/products/', 'http://127.0.0.1:8000/static/products/') || '/images/common/default-thumbnail.jpg'} alt="" />
                     <input
                       list="base_products"
-                      defaultValue=""
-                      onChange={e => handleSetBaseProduct(e.target.value)}
+                      value={searchText}
+                      onChange={e => handleSetSearchText(e.target.value)}
+                      onFocus={() => setDropdown(true)}
                     />
                     <label htmlFor="new-product-check" className="btn-admin-cell-td btn-new-product">
                       <i className="fa fa-plus"></i>
                     </label>
+                    {dropDown && (
+                      <BaseProductList
+                        baseProductList={baseProducts}
+                        // searchText={}
+                        handleSetBaseProductProp={item => handleSetBaseProduct(item.id)}
+                        turnOffDropDown={() => setDropdown(false)}
+                      />
+                    )}
                   </div>
-                  <datalist id="base_products">
-                    {baseProducts?.map((item, index) => (
-                      <option
-                        value={item.id}
-                        key={index}
-                      >
-                        {item.name} &emsp;
-                      </option>
-                    ))}
-                  </datalist>
                 </td>
                 <td>
-                  <div className="admin-cell-td color-td row">
+                  <div className="admin-cell-td d-flex color-td">
                     <div
                       className="admin-color-td"
                       style={{ background: productColor?.color?.color_code || "#eee" }}
                     />
-                    <input
-                      list="admin-color1"
-                      defaultValue=""
-                      onChange={e => handleSetProductColor(e.target.value)}
-                    />
+                    <select name="Size" id="size-product" onChange={e => handleSetProductColor(e.target.value)} defaultValue={sizes ? sizes[0]?.id : 1}>
+                      <option disabled>
+                        Chọn màu
+                      </option>
+                      {productColors?.map((item, index) => (
+                        <option value={item.id} key={index}>
+                          {item.color?.name}
+                        </option>
+                      ))}
+                    </select>
                     <button className="btn-admin-cell-td">
                       <i className="fa fa-plus"></i>
                     </button>
                   </div>
-                  <datalist id="admin-color1">
+                  {/* <datalist id="admin-color1">
                     {productColors?.map((item, index) => (
                       <option value={item.id} key={index}>
                         {item.color?.name}
                       </option>
                     ))}
-                  </datalist>
+                  </datalist> */}
                 </td>
                 <td>
-                  <div className="admin-cell-td size-td row">
+                  <div className="admin-cell-td d-flex size-td">
                     <div className="admin-size-td">
-                      L
+                      {size?.name}
                     </div>
-                    <input
-                      list="admin-size"
-                      onChange={e => handleSetSize(e.target.value)}
-                    />
-                    <button className="btn-admin-cell-td">
-                      <i className="fa fa-plus"></i>
-                    </button>
+                    <select name="Size" id="size-product" onChange={e => handleSetSize(e.target.value)} defaultValue={sizes ? sizes[0]?.id : 1}>
+                      <option disabled>
+                        Chọn size
+                      </option>
+                      {sizes?.map((item, index) => (
+                        <option value={item.id} key={index}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                   <datalist id="admin-size">
                     {sizes?.map((item, index) => (
@@ -259,7 +281,6 @@ export default function Inputs() {
                         {item.name}
                       </option>
                     ))}
-
                   </datalist>
                 </td>
                 <td>

@@ -10,6 +10,12 @@
     visibility: hidden;
 }
 
+.new-product-frame select {
+    height: 30px;
+    padding: 0px 6px;
+    margin-left: 6px;
+}
+
 .new-product-check:checked+.new-product-frame {
     display: block;
     visibility: visible;
@@ -34,10 +40,6 @@
     cursor: pointer;
 }
 
-/* .btn-close i{
-    text-shadow: 1px 1px 1px gray;
-} */
-
 .new-product-wrap {
     display: flex;
     min-height: 86vh;
@@ -45,15 +47,13 @@
 }
 
 .product-image-frame {
-    /* background-color: #393737; */
     padding: 0px 12px;
     margin: 0px 12px 0 0px;
 }
 
 .product-image {
     height: 100%;
-    /* background-image: url(./../../../../public/assets/images/background-upload-clothes.jpg); */
-    background-size: contain!important;
+    background-size: contain !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     box-shadow: 0px 1px 2px 0px grey;
@@ -82,7 +82,6 @@
 }
 
 .product-content {
-    /* background-color: aliceblue; */
     display: flex;
     flex-direction: column;
     padding: 0px 6px;
@@ -127,11 +126,18 @@ span.product-origin-price {
 .product-type {
     display: flex;
     align-items: center;
+    margin: 12px 0;
+}
 
+.product-type select {
+    height: 24px;
+    border: none;
+    outline: none;
+    min-width: 50px;
+    padding: 0 12px;
 }
 
 .product-color-choose {
-    /* margin-left: 12px; */
     border: solid 3px gray;
     height: 35px;
 }
@@ -148,10 +154,6 @@ span.product-origin-price {
 
 .product-size-name {
     font-size: 17px;
-}
-
-.product-sizes {
-
 }
 
 .product-size {
@@ -175,7 +177,7 @@ span.product-origin-price {
     margin-top: auto;
 }
 
-.new-product-actions .row{
+.new-product-actions .row {
     justify-content: space-between;
 }
 
@@ -194,12 +196,17 @@ span.product-origin-price {
 }
 
 .btn-cancel:hover {
-    background:rgb(201 107 107);
+    background: rgb(201 107 107);
     color: white;
     transition: 0.4s;
 }
 
-.btn-add{
+button.btn-add {
+    background: transparent;
+    font-size: inherit;
+}
+
+.btn-add {
     border: solid 1px rgb(7, 156, 86);
     color: rgb(7, 156, 86);
 }
@@ -223,12 +230,14 @@ span.product-origin-price {
     align-items: center;
     font-size: 2em;
 }
+
 .back-stars {
     display: flex;
     color: #bb5252;
     position: relative;
     text-shadow: 4px 4px 10px #843a3a;
 }
+
 .front-stars {
     display: flex;
     color: #FFBC0B;
@@ -241,12 +250,6 @@ span.product-origin-price {
 
 
 /* this new */
-/* input#product-name {
-    outline: none;
-    border: none;
-    border-bottom: solid 1px gray;
-    padding: 3px;
-} */
 
 .product-content input {
     outline: none;
@@ -261,14 +264,13 @@ span.product-origin-price {
     font-style: italic;
 }
 
-.product-price input{
+.product-price input {
     font-size: 24px;
     width: fit-content;
 }
 
-.product-description textarea{
+.product-description textarea {
     padding: 6px;
     font-size: 15px;
     width: 100%;
 }
-
