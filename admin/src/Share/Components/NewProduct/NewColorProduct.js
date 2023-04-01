@@ -1,22 +1,17 @@
 import './newProduct.css'
 import { useEffect, useState, useMemo } from 'react'
-import { createBaseProduct, getColors, getTypes } from '../../../lib'
+import { createBaseProduct, createColorProduct, getColors, getTypes } from '../../../lib'
 
-export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog }) {
+export default function NewColorProduct({ baseProduct, addColorProductSuccess, turnOffDialog }) {
+
+  console.log(baseProduct)
 
   const [types, setTypes] = useState([])
   const [colors, setColors] = useState([])
-  const [name, setName] = useState()
   const [image, setImage] = useState()
   const [type, setType] = useState()
-  const [discount, setDiscount] = useState()
-  const [codeName, setCodeName] = useState()
-  const [price, setPrice] = useState()
-  const [description, setDescription] = useState()
   const [color, setColor] = useState()
   const [errors, setErrors] = useState({})
-  // const [displayImage, setDisplayImage] = useState()
-
 
   const getImage = (image) => {
     if (typeof (image) === 'object' && image !== null) {
@@ -26,12 +21,6 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
   }
 
   const displayImage = useMemo(() => getImage(image), [image])
-
-  // useState(() => {
-  //   const updateImage = getImage(image)
-  //   console.log(updateImage)
-  //   setDisplayImage(updateImage)
-  // }, [image])
 
   useEffect(() => {
     const sendRequest = async () => {
@@ -49,25 +38,19 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
     sendRequest()
   }, [])
 
-  const handleCreateBaseProduct = (e) => {
+  const handleCreateColorProduct = (e) => {
     e.preventDefault()
-    const newBaseProduct = {
-      name,
+    const newColorProduct = {
       image,
-      type,
-      discount: 1,
-      code_name: codeName,
-      price,
-      description: 'Somwthing',
       color,
+      base_product: baseProduct.id
     }
 
-    console.log('daixah')
     const sendRequest = async () => {
-      const response = await createBaseProduct(newBaseProduct)
+      const response = await createColorProduct(newColorProduct)
       if (!response.error) {
         setErrors({})
-        addBaseProductSuccess()
+        addColorProductSuccess()
         return
       }
       setErrors(response.error)
@@ -78,8 +61,13 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
   // console.log(colors, color)
   // console.log(types, type)
 
+//to current VND
+//   var x = 1000;
+// x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+// console.log(x);
+
   return (
-    <div className="new-product-frame">
+    <div className="new-color-product-frame">
       <div className="container">
         <div className="new-product">
           <div className="close-wrap">
@@ -89,24 +77,23 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
           </div>
           <div className="new-product-wrap">
             <div className="product-image-frame col-6">
-              <label htmlFor="product-image-upload" className="product-image center-box"
+              <label htmlFor="product-image-upload-2" className="product-image center-box"
                 style={{ background: `url(${displayImage || '/assets/images/background-upload-clothes.jpg'})` }}
               >
                 <form action="/action_page.php">
-                  <input type="file" id="product-image-upload" name="filename" onChange={e => setImage(e.target.files[0])} />
+                  <input type="file" id="product-image-upload-2" name="filename" onChange={e => setImage(e.target.files[0])} />
                 </form>
               </label>
             </div>
-            <form className="product-content col-4" onSubmit={handleCreateBaseProduct}>
+            <form className="product-content col-4" onSubmit={handleCreateColorProduct}>
               {Object.keys(errors).length > 0 && <p> Đã có lỗi </p>}
               <input
                 className="product-title mt-12px"
                 type="text" id="product-name"
                 name="product-name"
                 placeholder="Tên sản phẩm..."
-                value={name}
-                onChange={e => setName(e.target.value)}
-                required
+                value={baseProduct?.name}
+                disabled
               />
               <span className="product-code">
                 Mã sản phẩm:
@@ -114,9 +101,8 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
                   className="mt-12px ml-12px"
                   type="text" id="product-code"
                   name="product-code" placeholder=""
-                  value={codeName}
-                  onChange={e => setCodeName(e.target.value)}
-                  required
+                  value={baseProduct?.code_name}
+                  disabled
                 />
               </span>
               <div className="mt-12px product-price">
@@ -128,37 +114,25 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
                   name="product-price"
                   placeholder=""
                   min={1}
-                  value={price}
-                  onChange={e => setPrice(Number(e.target.value))}
-                  required
+                  value={baseProduct?.price}
+                  disabled
                 />
               </div>
               <hr className="product-content-line mt-12px hidden" />
               <div className="product-type">
                 <span> Thể loại: </span>
-                <select name="types" id="types" className="ml-12px" value={type || 1} onChange={e => setType(e.target.value)}>
+                <select name="types" id="types" className="ml-12px" value={baseProduct?.type?.name || 2} >
                   {types.map((item, index) => (
                     <option value={item.id} key={index}>
                       {item.name}
                     </option>
                   ))}
                 </select>
-                {/* <input className="ml-12px"
-                  list="admin-type" defaultValue="" /> */}
-                {/* <datalist id="admin-type">
-                  <option value="Mặc định">
-                    Mặc định
-                  </option>
-                  <option value="Xanh">
-                    Xanh
-                  </option>
-                </datalist> */}
+
               </div>
               <div className="product-color-name row">
                 <span> Màu sắc: </span>
-                {/* <input className="product-color-choose ml-12px mt-12px" type="color" id="favcolor" name="favcolor" defaultValue="#ff0000" />
-                <input className="ml-12px" name="favcolor"
-                  list="admin-color" defaultValue="Mặc định" /> */}
+
                 <div
                   className="admin-color-td ml-12px"
                   style={{ background: colors?.find(x => x.id === Number(color))?.color_code || "#eee" }}
@@ -190,6 +164,9 @@ export default function NewBaseProduct({ addBaseProductSuccess, turnOffDialog })
                 <span>Mô tả:</span>
                 <textarea className="mt-12px"
                   id="product-des" name="product-des" rows={6} cols={50} placeholder="Điền mô tả sản phẩm tại đây ..."
+                  value={baseProduct?.description}
+                  readOnly
+                  disabled
                 />
               </div>
               {/* <div className="product-material mt-12px">

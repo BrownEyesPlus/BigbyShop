@@ -3,16 +3,25 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 
 import PurchaseProduct from './PurchaseProduct/PurchaseProduct'
-import { getOrderDetail } from '../../../lib'
+import { getOrderDetail, updateStatusOrder } from '../../../lib'
+import { ORDER } from '../../../Constants'
 
 export default function OrderDetail() {
   const { id } = useParams()
 
   const [orderDetail, setOrderDetail] = useState()
+  const [status, setStatus] = useState(0)
+  const [errors, setErrors] = useState()
+  const [notification, setNotification] = useState()
+
+  useEffect(() => {
+    setStatus(orderDetail ? orderDetail[0].order?.status : 0)
+  }, orderDetail)
 
   useEffect(() => {
     const sendRequest = async () => {
       const response = await getOrderDetail(id)
+      console.log(response)
       if (response) {
         setOrderDetail(response)
       }
@@ -23,6 +32,22 @@ export default function OrderDetail() {
   const totalPrice = orderDetail?.reduce((total, value) => {
     return total + (value.product.price * value.quantity)
   }, 0)
+
+  const handleUpdateStatus = () => {
+    const sendRequest = async () => {
+      const updateFields = {
+        status
+      }
+      const response = await updateStatusOrder(Number(id), updateFields)
+      if (response.error) {
+        setErrors('Đã xảy ra lỗi!')
+        return
+      }
+      setNotification('Cập nhật thành công!')
+      setErrors(null)
+    }
+    sendRequest()
+  }
 
   console.log(orderDetail)
 
@@ -88,19 +113,35 @@ export default function OrderDetail() {
 
                 <div>
                   <span>Trạng thái hóa đơn:</span>
-                  <span className='ml-12px' style={{ color: 'orange', fontStyle: 'italic' }}>chờ duyệt</span>
-                </div>
+                  {Object.keys(ORDER.status).filter((x, i) => i !== 3).map((item, index) => (
+                    <p
+                      className={`order-status  ${index === Number(status) ? 'active' : ''}`}
+                      key={index}
+                      onClick={() => setStatus(index)}
+                    >
+                      {ORDER.status[index].name}
+                    </p>
+                  ))}
 
+                </div>
+                <div className="text-center">
+                  {notification && <p>{notification}</p>}
+                  {errors && <p>{errors}</p>}
+                </div>
                 <hr className='mt-12px' />
 
                 <div type='submit' className='purchase-detail-actions space-between mt-12px'>
-                  <div className='col-6'>
+                  {/* <div className='col-6'>
                     <button type='submit' className='btn-purchase-detail btn-cancel-order'>
                       Hủy đơn
                     </button>
-                  </div>
-                  <div className='col-6'>
-                    <button type='submit' className='btn-purchase-detail btn-update-order'>
+                  </div> */}
+                  <div className='col-12'>
+                    <button
+                      type='submit'
+                      className='btn-purchase-detail btn-update-order'
+                      onClick={handleUpdateStatus}
+                    >
                       Cập nhật
                     </button>
                   </div>

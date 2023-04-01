@@ -1,7 +1,7 @@
 import './purchaseProduct.css'
 
 export default function PurchaseProduct({ data }) {
-  console.log(data)
+  // console.log(data)
 
   return (
     <tr className="alert" role="alert">

@@ -189,3 +189,14 @@ input#inputProductsSearch {
         opacity: 0;
     }
 }
+
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-wrap {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+

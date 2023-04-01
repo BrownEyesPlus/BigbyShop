@@ -23,3 +23,12 @@ table.admin-table {
     /* padding: 6px; */
 }
 
+.justify-center {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination-wrap {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}

@@ -1,13 +1,14 @@
 import './login.css'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { login } from '../../lib'
 import { actions } from '../../reducers/app'
 
 export default function Login() {
   const dispatch = useDispatch()
-
+  const history = useHistory()
 
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
@@ -57,8 +58,13 @@ export default function Login() {
   }, [])
 
   useEffect(() => {
-    if (isSuccess)
+    if (isSuccess) {
       console.log('Ok')
+      const t = setTimeout(() => {
+        history.push('/')
+      }, 1000)
+      return () => clearTimeout(t)
+    }
   }, [isSuccess])
 
   return (

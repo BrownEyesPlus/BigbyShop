@@ -2,7 +2,7 @@ import './profile.css'
 import { useEffect, useState } from 'react'
 
 import PurchaseOrder from './PurchaseOrder/PurchaseOrder'
-import { getOrdersUser } from '../../lib'
+import { getOrdersUser, getUserInfor } from '../../lib'
 
 const fakeProfileData = {
   id: 1,
@@ -65,12 +65,18 @@ const fakeOrdersData = {
 export default function Profile() {
 
   const [orders, setOrders] = useState()
+  const [user, setUser] = useState()
 
   const sendRequest = async () => {
-    const response = await getOrdersUser();
+    const response = await getOrdersUser()
+    const userResponse = await getUserInfor()
     if (response?.code) {
       return response
     }
+    if (userResponse?.code) {
+      // return response
+    }
+    setUser(userResponse)
     setOrders(response)
     return response
   }
@@ -79,7 +85,7 @@ export default function Profile() {
     sendRequest()
   }, [])
 
-  // console.log(orders)
+  console.log(user)
 
   return (
     <div className="profile">
@@ -94,7 +100,7 @@ export default function Profile() {
             <div className="row">
               <div className="col-3">
                 <div className="profile-image-frame">
-                  <img className="profile-image" src={fakeProfileData.image || '/images/common/default_profile.jpg'} />
+                  <img className="profile-image" src={user?.avatar || '/images/common/default_profile.jpg'} />
                 </div>
               </div>
               <div className="col-9">
@@ -105,47 +111,47 @@ export default function Profile() {
                   <div className="profile-row">
                     <span>Họ tên: </span>
                     <>
-                      {fakeProfileData.fullname}
+                      {`${user?.first_name || ''}  ${user?.last_name || ''}`}
                     </>
                   </div>
                   <div className="profile-row">
                     <span>Giới tính: </span>
                     <>
-                      {fakeProfileData.gender === 0 ? 'Nam' : 'Nu'}
+                      {Number(user?.gender) === 0 ? 'Nam' : 'Nữ'}
                     </>
                   </div>
                   <div className="profile-row">
                     <span>Năm sinh: </span>
                     <>
-                      {fakeProfileData.birth_year}
+                      {user?.birth_year || '01-08-1998'}
                     </>
                   </div>
                   <div className="profile-row">
                     <span>Điện thoại: </span>
                     <>
-                      {fakeProfileData.phone}
+                      {user?.phone || '0327123388'}
                     </>
                   </div>
                   <div className="profile-row">
                     <span>Email: </span>
                     <>
-                      {fakeProfileData.email}
+                      {user?.email}
                     </>
                   </div>
                   <div className="profile-row">
                     <span>Địa chỉ: </span>
                     <>
-                      {fakeProfileData.address}
+                      {user?.address1 || 'Cổ Dương, Tiên Dương, Đông Anh, Hà Nội'}
                     </>
                   </div>
-                  <div className="profile-actions">
+                  {/* <div className="profile-actions">
                     <button className="profile-action btn-edit-profile">
                       Chỉnh sửa thông tin cá nhân
                     </button>
                     <button className="profile-action btn-change-password">
                       Đổi mật khẩu
                     </button>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

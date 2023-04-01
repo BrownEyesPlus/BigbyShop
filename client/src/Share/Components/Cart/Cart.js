@@ -37,20 +37,27 @@ export default function Cart() {
               <CartItem key={index} data={item} />
             ))}
           </div>
-
           <div className="cart-bottom bottom">
             <div className="cart-total-price">
               Tổng tính:
               <span> {tempTotalPrice} đ</span>
             </div>
-            <a href="./purchase" >
-              <div className="btn-cart">
-                Thanh toán
+            {cart?.length > 0 ? (
+              <a href="./purchase" >
+                <div className="btn-cart">
+                  Thanh toán
+                </div>
+              </a>
+            ) : (
+              <div >
+                <div className="btn-cart disable">
+                  Thanh toán
+                </div>
               </div>
-            </a>
+            )}
           </div>
         </div>
-      </div>
-    </label>
+      </div >
+    </label >
   )
 }

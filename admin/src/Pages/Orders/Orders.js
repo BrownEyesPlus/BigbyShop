@@ -31,7 +31,7 @@ export default function Orders() {
               <tr className='admin-th'>
                 <th style={{ textAlign: 'center' }}>khách hàng</th>
                 <th>Ngày</th>
-                <th>Đơn giá</th>
+                <th>Thành tiền</th>
                 {/* <th>Mã đơn</th> */}
                 <th>Trạng thái</th>
                 <th className='th-actions'>Thao tác</th>

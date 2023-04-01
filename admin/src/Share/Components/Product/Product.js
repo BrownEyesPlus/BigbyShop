@@ -10,7 +10,7 @@ export default function Product({ data }) {
   const handleOpenModal = () => {
     // if (data)
     console.log(data)
-      dispatch(actions.setPreviewProduct(data))
+    dispatch(actions.setPreviewProduct(data))
   }
 
   return (
@@ -28,9 +28,9 @@ export default function Product({ data }) {
       <td>
         {data?.code_name}
       </td>
-      <td>
+      {/* <td>
         {data?.product_colors?.length}
-      </td>
+      </td> */}
       <td>
         {data?.price}
       </td>

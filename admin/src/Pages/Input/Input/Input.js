@@ -13,7 +13,7 @@ export default function Input({ data, count, index }) {
         </div>
       </td> */}
       <td>#{count - index}</td>
-      <td>20</td>
+      {/* <td>20</td> */}
       <td>
         {dayjs(new Date(data?.created_date)).format('D/MM YYYY, hh:mm')}
         {/* {(new Date(data?.created_date)).toLocaleDateString('de-DE', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} */}

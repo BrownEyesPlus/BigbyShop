@@ -47,7 +47,7 @@ export default function Register() {
     }
     else {
       e.preventDefault()
-      setErrors({ ...errors, password: 'Password is not match!' })
+      setErrors({ ...errors, password: 'Mật khẩu không trùng khớp!' })
     }
 
   }
@@ -83,7 +83,7 @@ export default function Register() {
           <h3 className="register-title">
             Đăng ký
           </h3>
-          {(Object.keys(errors).length > 0) && <p style={{ color: 'brown' }}>Đã có lỗi sảy ra! <br />{showError(errors)}</p>}
+          {(Object.keys(errors).length > 0) && <p style={{ color: 'brown' }}>Đã có lỗi xảy ra! <br />{showError(errors)}</p>}
           {isSuccess && <p style={{ color: 'green' }}>Bạn đã đăng ký thành công!</p>}
           <div className="register-form-group">
             <input
@@ -97,7 +97,7 @@ export default function Register() {
             <input
               type="text"
               className="register-input"
-              id="register-input"
+              id="register-input-1"
               placeholder="Họ"
               onChange={e => setFirstName(e.target.value)}
               required
@@ -105,16 +105,17 @@ export default function Register() {
             <input
               type="text"
               className="register-input"
-              id="register-input"
+              id="register-input-2"
               placeholder="Tên"
               onChange={e => setLastName(e.target.value)}
               required
             />
             <div className="register-form-inline">
+            {/* <input type="datetime-local" id="birthdaytime" name="birthdaytime"> */}
               <input
-                type="text"
+                type="date"
                 className="register-input col-6"
-                id="register-input"
+                id="register-input-3"
                 placeholder="Năm sinh"
                 onChange={e => setBirthYear(e.target.value)}
                 required
@@ -129,7 +130,7 @@ export default function Register() {
             <input
               type="text"
               className="register-input"
-              id="register-input"
+              id="register-input-4"
               placeholder="Điện thoại"
               onChange={e => setPhone(e.target.value)}
               required
@@ -137,7 +138,7 @@ export default function Register() {
             <input
               type="text"
               className="register-input"
-              id="register-input"
+              id="register-input-5"
               placeholder="Email"
               onChange={e => setEmail(e.target.value)}
               required
@@ -145,23 +146,23 @@ export default function Register() {
             <input
               type="text"
               className="register-input"
-              id="register-input"
+              id="register-input-6"
               placeholder="Địa chỉ"
               onChange={e => setAddress1(e.target.value)}
               required
             />
             <input
-              type="text"
+              type="password"
               className="register-input"
-              id="register-input"
+              id="register-input-7"
               placeholder="Mật khẩu"
               onChange={e => setPassword(e.target.value)}
               required
             />
             <input
-              type="text"
+              type="password"
               className="register-input"
-              id="register-input"
+              id="register-input-8"
               placeholder="Nhập lại mật khẩu"
               onChange={e => setConfirmPassword(e.target.value)}
               required

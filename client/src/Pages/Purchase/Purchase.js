@@ -95,6 +95,9 @@ export default function Purchase() {
                     {`${totalPrice} đ`}
                   </span>
                 </div>
+                {/* <hr />
+                <span>Số điện thoại:</span>
+                <input type="text" /> */}
                 <hr />
                 <span>Địa chỉ nhận hàng:</span>
 
