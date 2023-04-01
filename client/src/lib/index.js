@@ -40,9 +40,9 @@ export const getUserInfor = async (params) => {
   }
 }
 
-export const getBaseProduct = async (params) => {
+export const getBaseProduct = async (params = '', page = 1) => {
   try {
-    const response = await api.get(`base_products`);
+    const response = await api.get(`base_products/?q=${params}&page=${page}`);
     return response.data
   } catch (error) {
     return null

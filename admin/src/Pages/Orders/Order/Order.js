@@ -1,10 +1,11 @@
 // import OrderDetail from '../../../Share/Components/OrderDetail/OrderDetail'
 import './order.css'
 import dayjs from 'dayjs'
+import { ORDER } from '../../../Constants'
 
 export default function Order({ data }) {
 
-  // console.log(data)
+  // console.log(data.status)
   return (
     <tr className='admin-td'>
       <td>
@@ -12,7 +13,7 @@ export default function Order({ data }) {
           <div className='row'>
             <img src={data.user?.image || '/images/common/default_profile.jpg'} alt='' />
             <span>
-              {data.user?.name || 'Anonymous User'}
+              {data.client?.username || 'Anonymous'}
             </span>
           </div>
         </div>
@@ -24,7 +25,10 @@ export default function Order({ data }) {
         {data?.total_price} VND
       </td>
       {/* <td>1232534641423</td> */}
-      <td>Chờ duyệt</td>
+      <td>
+        {/* {data.status Or} */}
+        {ORDER.status[data?.status].name}
+      </td>
       <td>
         <div className='table-actions'>
           <a href={`/orderdetail/${data.id}`}>

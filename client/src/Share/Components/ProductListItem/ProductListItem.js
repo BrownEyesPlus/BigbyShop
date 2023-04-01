@@ -17,6 +17,8 @@ export default function ProductListItem({ data }) {
       dispatch(actions.setPreviewProduct(data))
   }
 
+  console.log(data)
+
   return (
     <div className="col-2-4 product-lists-item">
       <div className="thumb-item"

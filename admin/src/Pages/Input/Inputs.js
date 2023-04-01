@@ -2,10 +2,11 @@ import './inputs.css'
 import { useEffect, useState } from 'react'
 
 import Input from './Input/Input'
-import NewProduct from '../../Share/Components/NewProduct/NewProduct'
+import NewBaseProduct from '../../Share/Components/NewProduct/NewProduct'
 import { createInput, getBaseProduct, getInputs, getSizes } from '../../lib'
 import NewItem from './NewItem'
 import BaseProductList from './BaseProductList'
+import NewColorProduct from '../../Share/Components/NewProduct/NewColorProduct'
 
 export default function Inputs() {
 
@@ -23,6 +24,9 @@ export default function Inputs() {
   const [successNotification, setSuccessNotification] = useState(null)
   const [searchText, setSearchText] = useState('')
   const [dropDown, setDropdown] = useState(false)
+  const [isAddNewBaseProduct, setIsAddNewBaseProduct] = useState(false)
+  const [isAddNewColorProduct, setIsAddNewColorProduct] = useState(false)
+  // const [notification, setNotification] = useState(null)
 
   useEffect(() => {
     if (inputDetails.length > 0) {
@@ -75,6 +79,16 @@ export default function Inputs() {
     }
   }, [successNotification])
 
+  useEffect(() => {
+    const sendRequest = async () => {
+      const response = await getBaseProduct(searchText)
+      if (response) {
+        setBaseProducts(response.results)
+      }
+    }
+    sendRequest()
+  }, [searchText, isAddNewBaseProduct, isAddNewColorProduct])
+
   const handleSetBaseProduct = (id) => {
     const isExist = baseProducts.find(x => x.id === Number(id))
     if (isExist && id) {
@@ -121,7 +135,7 @@ export default function Inputs() {
   }
 
   const handleAddToInput = () => {
-    const isValid = productColors && productColor
+    const isValid = productColors && productColor && (Number(quantity) > 0) && (Number(price) > 0)
     if (isValid) {
       const newInputDetail = {
         base_product: baseProduct?.id,
@@ -174,9 +188,24 @@ export default function Inputs() {
       setDropdown(true)
   }
 
-  console.log(sizes, size)
+  const handleAddBaseProductSuccess = () => {
+    setIsAddNewBaseProduct(false)
+    setSuccessNotification('Thêm sản phẩm gốc thành công!')
+  }
+
+  const handleSetIsAddNewColorProduct = () => {
+    if (baseProduct)
+      setIsAddNewColorProduct(true)
+  }
+
+  const handleSetSuccessNotification = () => {
+    setSuccessNotification('Thêm áo màu thành công!')
+    setIsAddNewColorProduct(false)
+  }
+
+  // console.log(sizes, size)
   // console.log(baseProducts?.product_colors)
-  console.log(inputDetails)
+  // console.log(inputDetails)
 
   return (
     <div className="admin-page">
@@ -187,8 +216,24 @@ export default function Inputs() {
           </div>
           < div className="admin-page-content">
             {successNotification && <p className="success-input">{successNotification}</p>}
-            <input type="checkbox" className="new-product-check hidden-check" name="new-product-checkbox" id="new-product-check" autoComplete="off" />
-            <NewProduct />
+            <input
+              type="checkbox"
+              className="new-product-check hidden-check"
+              name="new-product-checkbox"
+              id="new-product-check"
+              autoComplete="off"
+              checked={isAddNewBaseProduct}
+            />
+            <NewBaseProduct
+              addBaseProductSuccess={() => handleAddBaseProductSuccess()}
+              turnOffDialog={() => setIsAddNewBaseProduct(false)}
+            />
+            {(isAddNewColorProduct && baseProduct) && (
+              <NewColorProduct
+                turnOffDialog={() => setIsAddNewColorProduct(false)}
+                baseProduct={baseProduct}
+                addColorProductSuccess={() => handleSetSuccessNotification()} />
+            )}
             <table className="admin-table">
               <tr className="admin-th">
                 <th>Chọn sản phẩm</th>
@@ -218,13 +263,12 @@ export default function Inputs() {
                       onChange={e => handleSetSearchText(e.target.value)}
                       onFocus={() => setDropdown(true)}
                     />
-                    <label htmlFor="new-product-check" className="btn-admin-cell-td btn-new-product">
+                    <label htmlFor="new-product-check" className="btn-admin-cell-td btn-new-product" onClick={() => setIsAddNewBaseProduct(true)}>
                       <i className="fa fa-plus"></i>
                     </label>
                     {dropDown && (
                       <BaseProductList
                         baseProductList={baseProducts}
-                        // searchText={}
                         handleSetBaseProductProp={item => handleSetBaseProduct(item.id)}
                         turnOffDropDown={() => setDropdown(false)}
                       />
@@ -247,9 +291,10 @@ export default function Inputs() {
                         </option>
                       ))}
                     </select>
-                    <button className="btn-admin-cell-td">
+                    <button className="btn-admin-cell-td" onClick={() => handleSetIsAddNewColorProduct(true)}>
                       <i className="fa fa-plus"></i>
                     </button>
+
                   </div>
                   {/* <datalist id="admin-color1">
                     {productColors?.map((item, index) => (
@@ -332,7 +377,7 @@ export default function Inputs() {
             <table className="admin-table">
               <tr className="admin-th">
                 <th>STT</th>
-                <th>Số lượng</th>
+                {/* <th>Số lượng</th> */}
                 {/* <th>Tổng đơn (vnd)</th> */}
                 <th>Ngày</th>
                 <th className="th-actions">Thao tác</th>

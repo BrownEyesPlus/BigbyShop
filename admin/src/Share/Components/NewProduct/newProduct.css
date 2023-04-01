@@ -10,7 +10,18 @@
     visibility: hidden;
 }
 
-.new-product-frame select {
+.new-color-product-frame {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.795);
+    height: 100vh;
+    width: 100vw;
+}
+
+.new-product-frame select,
+.new-color-product-frame select {
     height: 30px;
     padding: 0px 6px;
     margin-left: 6px;
@@ -204,6 +215,13 @@ span.product-origin-price {
 button.btn-add {
     background: transparent;
     font-size: inherit;
+    width: 48%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: unset;
+    padding: 10px;
 }
 
 .btn-add {

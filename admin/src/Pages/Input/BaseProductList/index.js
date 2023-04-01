@@ -38,6 +38,8 @@ export default function BaseProductList({ baseProductList, handleSetBaseProductP
             background: white;
             overflow-y: scroll;
             max-height: 524px;
+            min-width: 225px;
+            max-width: 400px;
           }
 
           .base-product {
@@ -56,6 +58,9 @@ export default function BaseProductList({ baseProductList, handleSetBaseProductP
           }
           .base-product .wrap span {
             margin: 0 12px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
           }
         `}
       </style>

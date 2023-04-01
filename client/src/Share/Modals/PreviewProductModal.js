@@ -1,8 +1,7 @@
-import { useState } from 'react'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { PRODUCT_CONSTANT } from '../../Constants'
 
+import { PRODUCT_CONSTANT } from '../../Constants'
 import ClickOutSide from '../../hooks/ClickOutSide'
 import { getProductColorsByBaseProductId } from '../../lib'
 import { actions } from '../../reducers/app'
@@ -18,6 +17,8 @@ export default function PreviewProductModal() {
   const handleCloseModal = () => {
     dispatch(actions.clearPreviewProduct())
   }
+
+  console.log(productSelected)
 
   useEffect(() => {
     if (previewProduct.id) {
@@ -131,7 +132,9 @@ export default function PreviewProductModal() {
                     </div>
                   </div>
                   <div className="product-size-name">
-                    Kích cỡ: <span> L</span>
+                    Kích cỡ: <span>
+                      {PRODUCT_CONSTANT.size[productSelected?.size] || ''}
+                    </span>
                   </div>
                   <div className="product-sizes">
                     <div className="row">

@@ -1,5 +1,6 @@
 import './navbar.css'
 import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Cart from '../Cart/Cart'
 import { LINK } from '../../../Constants'
@@ -11,6 +12,7 @@ import { actions } from '../../../reducers/app'
 export default function NavBar() {
   const dispatch = useDispatch()
   const pathname = (window.location.pathname)
+  const history = useHistory()
 
   const cart = useSelector(state => state.app.cart) || []
   const isLogedIn = useSelector(state => state.app.isLogedIn)
@@ -28,7 +30,7 @@ export default function NavBar() {
   const handleLogout = () => {
     dispatch(actions.logout())
     setIsDropdown(false)
-    // router.push(`/auth/login`)
+    history.push(`/login`)
   }
 
 
@@ -55,9 +57,7 @@ export default function NavBar() {
                   </a>
                 </li>
               ))}
-
               <li className="nav-item" style={{ width: "2px", background: "black", margin: "0px 15px" }} />
-
               <li
                 className={`nav-item ${'/favourite' === pathname ? 'active' : ''}`}
               >
@@ -106,7 +106,6 @@ export default function NavBar() {
                   </a>
                 </div>
               )}
-
             </ul>
           </div>
         </div>

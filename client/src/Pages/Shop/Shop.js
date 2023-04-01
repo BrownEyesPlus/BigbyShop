@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import PaginateSearch from '../../Share/Components/Paginator/Paginate'
 import { getBaseProduct } from '../../lib'
 import BlogsAd from '../../Share/Components/BlogsAd/BlogsAd'
 import NewsLetter from '../../Share/Components/NewsLetter/NewsLetter'
@@ -229,19 +230,34 @@ const fakeHomeData = {
 
 export default function Shop() {
 	const [baseProducts, setBaseProduct] = useState({})
+	const [currentPage, setCurrentPage] = useState(1)
+	const [totalPage, setTotalPage] = useState(1)
+	const [searchText, setSearchText] = useState('')
 
-  const sendRequest = async () => {
-    const response = await getBaseProduct();
-    if (response?.code) {
-      return response.detail
-    }
-    setBaseProduct(response)
-    return response
-  }
+	const sendRequest = async (searchText = '', page = 1) => {
+		const response = await getBaseProduct(searchText, page);
+		if (response?.code) {
+			return response.detail
+		}
+		setBaseProduct(response)
+		setTotalPage(Math.ceil(Number(response.count) / 10))
+		return response
+	}
 
-  useEffect(() => {
-    sendRequest()
-  }, [])
+	useEffect(() => {
+		sendRequest()
+	}, [])
+
+	useEffect(() => {
+		sendRequest(searchText, currentPage)
+	}, [currentPage])
+
+	const handleSearch = (e) => {
+		console.log(e)
+		e.preventDefault()
+		setCurrentPage(1)
+		sendRequest(searchText, 1)
+	}
 
 	return (
 		<div className="shop">
@@ -249,7 +265,7 @@ export default function Shop() {
 				<div className="products-top-bar row">
 					<h1 className="hidden"></h1>
 					<div className="products-by-gender col-4">
-						<input type="radio" className="gender-check hidden-check" name="options" id="option1" autoComplete="off" defaultChecked />
+						{/* <input type="radio" className="gender-check hidden-check" name="options" id="option1" autoComplete="off" defaultChecked />
 						<label className="gender-option" htmlFor="option1" >
 							Tất cả sản phẩm
 						</label>
@@ -260,15 +276,24 @@ export default function Shop() {
 						<input type="radio" className="gender-check hidden-check" name="options" id="option3" autoComplete="off" />
 						<label className="gender-option" htmlFor="option3" >
 							Nữ
-						</label>
+						</label> */}
 					</div>
 					<div className="col-4">
 						<div className="products-search">
-							<form className="form-inline">
+							<form className="form-inline" onSubmit={handleSearch}>
 								<div className="products-search-form">
-									<input type="text" className="products-search-input" id="inputProductsSearch" placeholder="Tìm kiếm sản phẩm" />
+									<input
+										type="text" className="products-search-input"
+										id="inputProductsSearch"
+										placeholder="Tìm kiếm sản phẩm"
+										value={searchText}
+										onChange={(e) => setSearchText(e.target.value)}
+									/>
 								</div>
-								<button type="submit" className="btn-products-search">
+								<button
+									type="submit"
+									className="btn-products-search"
+								>
 									<i className="fa fa-search">
 									</i>
 								</button>
@@ -276,9 +301,9 @@ export default function Shop() {
 						</div>
 					</div>
 					<div className="col-4 flex-right">
-						<label className="products-filter-btn" htmlFor="filter">
+						{/* <label className="products-filter-btn" htmlFor="filter">
 							Filter <i className="fa fa-sliders"></i>
-						</label>
+						</label> */}
 					</div>
 				</div>
 				<div className="products-filter">
@@ -442,6 +467,13 @@ export default function Shop() {
 						<ProductListItem data={product} key={index} />
 						// <></>
 					))}
+				</div>
+				<div className="justify-center pagination-wrap">
+					<PaginateSearch
+						totalPage={totalPage}
+						currentPage={currentPage}
+						handleSetPage={(page) => { setCurrentPage(page) }}
+					/>
 				</div>
 			</div>
 			<BlogsAd blogs={fakeHomeData.blogs} />

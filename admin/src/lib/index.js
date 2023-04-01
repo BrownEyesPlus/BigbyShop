@@ -31,9 +31,9 @@ export const getUserInfor = async (params) => {
   }
 }
 
-export const getBaseProduct = async (params) => {
+export const getBaseProduct = async (params = '', page = 1) => {
   try {
-    const response = await api.get(`base_products`);
+    const response = await api.get(`base_products/?q=${params}&page=${page}`);
     return response.data
   } catch (error) {
     return null
@@ -70,7 +70,7 @@ export const getOrders = async (params) => {
 
 export const getOrderDetail = async (id) => {
   try {
-    const response = await api.get(`/orders/${id}`);
+    const response = await api.get(`/orders/${id}/`);
     return response.data
   } catch (error) {
     console.log(error)
@@ -151,6 +151,39 @@ export const createBaseProduct = async (params) => {
     return response.data
   }
   catch (error) {
+    return {
+      status: error.status,
+      error: error.response.data
+    }
+  }
+}
+
+export const createColorProduct = async (params) => {
+  try {
+    let formData = new FormData()
+    Object.keys(params).forEach(key => {
+      formData.append(`${key}`, params[key])
+    })
+    const response = await api.post(`/product_colors/`, formData, {
+      headers: { Authorization: `Bearer ${getCookie('access_token')}`, }
+    })
+    return response.data
+  }
+  catch (error) {
+    return {
+      status: error.status,
+      error: error.response.data
+    }
+  }
+}
+
+export const updateStatusOrder = async (id, params) => {
+  try {
+    const response = await api.patch(`/orders/${id}/`, params, {
+      headers: { Authorization: `Bearer ${getCookie('access_token')}`, }
+    })
+    return response.data
+  } catch (error) {
     return {
       status: error.status,
       error: error.response.data

@@ -1,4 +1,4 @@
-export default function NewItem({ data, productColor, baseProduct, size, quantity, price, changeQuantity }) {
+export default function NewItem({ data, productColor, baseProduct, size, quantity, price, changeQuantity,  }) {
 
   const handleSetQuantity = (value) => {
     const newQuantity = {
@@ -6,7 +6,11 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
       size: size?.id,
       quantity: value
     }
-    // console.log(newQuantity, data)
+    // console.log(newQuantity, productColor, size)
+  }
+
+  const handleDeleteItem = (value) => {
+
   }
 
   return (
@@ -55,8 +59,8 @@ export default function NewItem({ data, productColor, baseProduct, size, quantit
             min={1}
             onChange={e => handleSetQuantity(Number(e.target.value))}
             value={quantity}
-          // disabled
-          // readOnly
+            disabled
+            // readOnly
           />
         </div>
       </td>

@@ -1,4 +1,3 @@
-
 .order-detail-frame {
     position: fixed;
     z-index: 1000;
@@ -25,7 +24,7 @@
     margin-bottom: 12px;
 }
 
-.purchase-products  {
+.purchase-products {
     margin: 0;
 }
 
@@ -145,7 +144,7 @@ table {
     color: gray;
 }
 
-.purchase-method input{
+.purchase-method input {
     /* height: 20px; */
 }
 
@@ -155,7 +154,7 @@ label.purchase-option {
     cursor: pointer;
 }
 
-.purchase-detail-wrap hr{
+.purchase-detail-wrap hr {
     width: 100%;
     margin-bottom: 12px;
 }
@@ -201,4 +200,16 @@ label.purchase-option {
 .btn-update-order:hover {
     color: white;
     background-color: green;
+}
+
+.order-status {
+    padding: 3px;
+    padding-left: 6px;
+    cursor: pointer;
+}
+
+.order-status.active {
+    /* cursor: pointer; */
+    background-color: #eee;
+    color: orange;
 }
